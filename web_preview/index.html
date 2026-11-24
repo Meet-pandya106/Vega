@@ -823,11 +823,322 @@
     }
     .cal-day-pnl.green { color: #30D158; }
     .cal-day-pnl.red { color: #FF453A; }
+
+    /* CINEMATIC ANIMATED SPLASH SCREEN */
+    .splash-screen {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: #0B0C0E;
+      z-index: 10000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s ease;
+      overflow: hidden;
+    }
+    .splash-screen.fade-out {
+      opacity: 0;
+      transform: scale(1.04);
+      pointer-events: none;
+    }
+    .splash-radial-glow {
+      position: absolute;
+      width: 320px;
+      height: 320px;
+      background: radial-gradient(circle, rgba(124, 58, 237, 0.35) 0%, rgba(79, 70, 229, 0.15) 45%, transparent 70%);
+      border-radius: 50%;
+      filter: blur(40px);
+      animation: pulseGlow 3s ease-in-out infinite alternate;
+    }
+    @keyframes pulseGlow {
+      0% { transform: scale(0.9); opacity: 0.6; }
+      100% { transform: scale(1.2); opacity: 1; }
+    }
+    .splash-logo-card {
+      position: relative;
+      width: 76px;
+      height: 76px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, #8B5CF6 0%, #4338CA 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      font-weight: 900;
+      color: #fff;
+      box-shadow: 0 12px 36px rgba(124, 58, 237, 0.45);
+      animation: floatLogo 2.5s ease-in-out infinite;
+      z-index: 2;
+    }
+    @keyframes floatLogo {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    .splash-title {
+      font-size: 26px;
+      font-weight: 900;
+      letter-spacing: 6px;
+      color: #fff;
+      margin-top: 20px;
+      z-index: 2;
+    }
+    .splash-sub {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+      margin-top: 6px;
+      text-transform: uppercase;
+      z-index: 2;
+    }
+    .splash-loader-bar {
+      width: 140px;
+      height: 3px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 2px;
+      margin-top: 36px;
+      overflow: hidden;
+      position: relative;
+      z-index: 2;
+    }
+    .splash-loader-progress {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #8B5CF6, #30D158);
+      border-radius: 2px;
+      animation: splashLoad 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes splashLoad {
+      0% { width: 0%; }
+      60% { width: 75%; }
+      100% { width: 100%; }
+    }
+
+    /* ONBOARDING SLIDES SCREEN */
+    .onboarding-screen {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: #0B0C0E;
+      z-index: 9998;
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 44px 24px 32px 24px;
+      overflow: hidden;
+    }
+    .onboarding-screen.active {
+      display: flex;
+    }
+    .onboarding-top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .onboarding-slides-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+    }
+    .onboarding-slide {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      animation: slideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .onboarding-slide.active {
+      display: flex;
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    .onboarding-graphic {
+      width: 100%;
+      max-width: 290px;
+      height: 220px;
+      border-radius: 24px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 28px;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.5);
+      position: relative;
+      overflow: hidden;
+    }
+    .onboarding-slide-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+    .onboarding-slide-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      max-width: 300px;
+    }
+    .onboarding-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin: 24px 0 20px 0;
+    }
+    .onboarding-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 4px;
+      background: rgba(255,255,255,0.2);
+      transition: all 0.3s ease;
+    }
+    .onboarding-dot.active {
+      width: 24px;
+      background: #8B5CF6;
+    }
+    .onboarding-bottom-actions {
+      display: flex;
+      gap: 12px;
+    }
   </style>
 </head>
 <body>
 
 <div class="phone-container">
+  <!-- CINEMATIC ANIMATED SPLASH SCREEN -->
+  <div id="splashScreen" class="splash-screen">
+    <div class="splash-radial-glow"></div>
+    <div class="splash-logo-card">V</div>
+    <div class="splash-title">VEGA</div>
+    <div class="splash-sub">Institutional F&O Ledger</div>
+    <div class="splash-loader-bar">
+      <div class="splash-loader-progress"></div>
+    </div>
+    <div style="font-size:10px; color:rgba(255,255,255,0.3); margin-top:14px; letter-spacing:1px; z-index:2;">
+      EXACT DHAN CALCULATION ENGINE
+    </div>
+  </div>
+
+  <!-- INTERACTIVE ONBOARDING WALKTHROUGH SCREEN -->
+  <div id="onboardingScreen" class="onboarding-screen">
+    <div class="onboarding-top-bar">
+      <span style="font-size:11px; font-weight:800; letter-spacing:1.5px; color:#8B5CF6; text-transform:uppercase;">VEGA TOUR</span>
+      <button onclick="skipOnboarding()" style="background:transparent; border:none; color:var(--text-muted); font-size:12px; font-weight:700; cursor:pointer;">Skip</button>
+    </div>
+
+    <div class="onboarding-slides-container">
+      <!-- SLIDE 1: INDEPENDENT LEDGER -->
+      <div class="onboarding-slide active" id="onb-slide-0">
+        <div class="onboarding-graphic">
+          <div style="width:100%; display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <span style="font-size:10px; font-weight:800; background:rgba(124,58,237,0.2); color:#A78BFA; padding:3px 8px; border-radius:6px;">LIVE EXECUTION</span>
+            <span style="font-size:11px; color:var(--text-muted);">Today</span>
+          </div>
+          <div style="width:100%; background:rgba(255,255,255,0.04); border-radius:14px; padding:12px; margin-bottom:8px; border:1px solid var(--border);">
+            <div style="display:flex; justify-content:space-between; font-weight:800; font-size:13px; margin-bottom:4px;">
+              <span>NIFTY 24200 CE</span>
+              <span style="color:#30D158;">+₹3,250.00</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; font-size:11px; color:var(--text-muted);">
+              <span>50 Qty @ ₹115 → ₹180</span>
+              <span style="color:#FF453A;">Charges -₹52.10</span>
+            </div>
+          </div>
+          <div style="display:flex; gap:6px; width:100%;">
+            <span style="font-size:10px; background:rgba(48,209,88,0.15); color:#30D158; padding:3px 8px; border-radius:8px; font-weight:700;">+₹3,197.90 Net</span>
+            <span style="font-size:10px; background:rgba(255,255,255,0.06); color:var(--text-muted); padding:3px 8px; border-radius:8px;">ORB 15M Scalp</span>
+          </div>
+        </div>
+        <div class="onboarding-slide-title">Zero Broker Noise.<br>Pure Trading Performance.</div>
+        <div class="onboarding-slide-desc">Say goodbye to broker clutter. Vega starts 100% blank, letting you manually track capital, deposits, and trades with complete clarity.</div>
+      </div>
+
+      <!-- SLIDE 2: EXACT DHAN ENGINE -->
+      <div class="onboarding-slide" id="onb-slide-1">
+        <div class="onboarding-graphic">
+          <div style="font-size:11px; font-weight:800; color:var(--text-muted); text-transform:uppercase; margin-bottom:12px;">Dhan F&O Math Verified</div>
+          <div style="width:100%; display:grid; grid-template-columns: 1fr 1fr; gap:8px; margin-bottom:12px;">
+            <div style="background:rgba(255,255,255,0.04); padding:10px; border-radius:12px; border:1px solid var(--border); text-align:left;">
+              <div style="font-size:10px; color:var(--text-muted);">Brokerage</div>
+              <div style="font-size:13px; font-weight:800; color:#fff;">₹40 Flat</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.04); padding:10px; border-radius:12px; border:1px solid var(--border); text-align:left;">
+              <div style="font-size:10px; color:var(--text-muted);">STT / CTT</div>
+              <div style="font-size:13px; font-weight:800; color:#fff;">0.1% Premium</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.04); padding:10px; border-radius:12px; border:1px solid var(--border); text-align:left;">
+              <div style="font-size:10px; color:var(--text-muted);">Exchange Fee</div>
+              <div style="font-size:13px; font-weight:800; color:#fff;">0.03503%</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.04); padding:10px; border-radius:12px; border:1px solid var(--border); text-align:left;">
+              <div style="font-size:10px; color:var(--text-muted);">GST (18%)</div>
+              <div style="font-size:13px; font-weight:800; color:#fff;">On Txn+Bkg</div>
+            </div>
+          </div>
+          <div style="font-size:11px; color:#30D158; font-weight:700;">✅ Verified with Dhan 2026 Regulatory Slabs</div>
+        </div>
+        <div class="onboarding-slide-title">Exact Dhan Regulatory<br>Tax Calculation Engine</div>
+        <div class="onboarding-slide-desc">Never guess your real take-home profit. Vega automatically deducts brokerage, STT, turnover charges, and GST down to the exact paisa.</div>
+      </div>
+
+      <!-- SLIDE 3: RISK & CAPITAL -->
+      <div class="onboarding-slide" id="onb-slide-2">
+        <div class="onboarding-graphic">
+          <div style="width:48px; height:48px; border-radius:50%; background:rgba(255,69,58,0.15); border:1px solid rgba(255,69,58,0.4); display:flex; align-items:center; justify-content:center; font-size:22px; margin-bottom:12px;">🛡️</div>
+          <div style="font-size:14px; font-weight:800; color:#FF453A; margin-bottom:4px;">Daily Risk Kill Switch</div>
+          <div style="font-size:11px; color:var(--text-muted); margin-bottom:12px;">Stops revenge trading & protects bankroll</div>
+          <div style="width:100%; background:rgba(255,255,255,0.04); border-radius:12px; padding:8px 12px; border:1px solid var(--border); display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-size:12px; font-weight:700;">Allocated vs. Net Balance</span>
+            <span style="font-size:11px; color:#F6C84C; font-weight:800;">Real-Time Math</span>
+          </div>
+        </div>
+        <div class="onboarding-slide-title">Capital Control &<br>Daily Risk Management</div>
+        <div class="onboarding-slide-desc">Manage deposits, record withdrawals, and toggle on the optional Daily Kill Switch to lock trades whenever your daily loss limit is hit.</div>
+      </div>
+
+      <!-- SLIDE 4: CLOUD & AUDIT READY -->
+      <div class="onboarding-slide" id="onb-slide-3">
+        <div class="onboarding-graphic">
+          <div style="width:48px; height:48px; border-radius:50%; background:rgba(48,209,88,0.15); border:1px solid rgba(48,209,88,0.4); display:flex; align-items:center; justify-content:center; font-size:22px; margin-bottom:12px;">☁️</div>
+          <div style="font-size:14px; font-weight:800; color:#30D158; margin-bottom:4px;">Supabase Cloud Active</div>
+          <div style="font-size:11px; color:var(--text-muted); margin-bottom:12px;">Mumbai (ap-south-1) Secure PostgreSQL</div>
+          <div style="display:flex; gap:8px;">
+            <span style="font-size:11px; background:rgba(255,255,255,0.06); padding:4px 10px; border-radius:8px; border:1px solid var(--border);">📥 1-Tap CSV</span>
+            <span style="font-size:11px; background:rgba(255,255,255,0.06); padding:4px 10px; border-radius:8px; border:1px solid var(--border);">🧾 Sec 44AB</span>
+          </div>
+        </div>
+        <div class="onboarding-slide-title">Cloud Synchronized &<br>Ready for Tax Audits</div>
+        <div class="onboarding-slide-desc">Everything syncs to your personal cloud database. Export clean CSV statements anytime for your CA, tax filing, or personal archives.</div>
+      </div>
+    </div>
+
+    <!-- CAROUSEL CONTROLS -->
+    <div>
+      <div class="onboarding-dots">
+        <div class="onboarding-dot active" id="onb-dot-0"></div>
+        <div class="onboarding-dot" id="onb-dot-1"></div>
+        <div class="onboarding-dot" id="onb-dot-2"></div>
+        <div class="onboarding-dot" id="onb-dot-3"></div>
+      </div>
+
+      <div class="onboarding-bottom-actions">
+        <button class="submit-btn" id="onbPrevBtn" style="background:var(--card-subtle); color:var(--text-muted); flex:1; display:none;" onclick="prevOnbSlide()">
+          <span>BACK</span>
+        </button>
+        <button class="submit-btn" id="onbNextBtn" style="background:#8B5CF6; color:#fff; flex:2;" onclick="nextOnbSlide()">
+          <span>NEXT</span>
+        </button>
+      </div>
+    </div>
+  </div>
   <!-- Dynamic Island -->
   <div class="island-bar">
     <div class="island-capsule">
@@ -1289,6 +1600,9 @@
       </button>
       <button class="drawer-btn" onclick="installPWA()">
         <span>📲</span><span>Install App on Phone</span>
+      </button>
+      <button class="drawer-btn" onclick="closeMenuDrawer(); replayOnboarding();">
+        <span>📖</span><span>App Tour & Feature Walkthrough</span>
       </button>
 
       <div class="drawer-section-label">System & Updates</div>
@@ -2406,8 +2720,93 @@
     }
   }
 
+  // ========================================================
+  // ANIMATED SPLASH & ONBOARDING CONTROLS
+  // ========================================================
+  let currentOnbSlide = 0;
+  const TOTAL_ONB_SLIDES = 4;
+
+  function initAppExperience() {
+    const splash = document.getElementById('splashScreen');
+    setTimeout(() => {
+      if (splash) {
+        splash.classList.add('fade-out');
+        setTimeout(() => splash.style.display = 'none', 600);
+      }
+      // Check if first time onboarding
+      const hasCompletedOnb = localStorage.getItem('vega_onboarding_completed') === 'true';
+      if (!hasCompletedOnb) {
+        showOnboarding();
+      } else {
+        checkAppLockOnBoot();
+      }
+    }, 1800);
+  }
+
+  function showOnboarding() {
+    currentOnbSlide = 0;
+    updateOnbSlideView();
+    const onb = document.getElementById('onboardingScreen');
+    if (onb) onb.classList.add('active');
+  }
+
+  function hideOnboarding() {
+    const onb = document.getElementById('onboardingScreen');
+    if (onb) onb.classList.remove('active');
+    localStorage.setItem('vega_onboarding_completed', 'true');
+    checkAppLockOnBoot();
+  }
+
+  function skipOnboarding() {
+    hideOnboarding();
+  }
+
+  function replayOnboarding() {
+    showOnboarding();
+  }
+
+  function updateOnbSlideView() {
+    for (let i = 0; i < TOTAL_ONB_SLIDES; i++) {
+      const slide = document.getElementById(`onb-slide-${i}`);
+      const dot = document.getElementById(`onb-dot-${i}`);
+      if (slide) slide.classList.toggle('active', i === currentOnbSlide);
+      if (dot) dot.classList.toggle('active', i === currentOnbSlide);
+    }
+    const prevBtn = document.getElementById('onbPrevBtn');
+    if (prevBtn) prevBtn.style.display = currentOnbSlide === 0 ? 'none' : 'block';
+
+    const nextBtn = document.getElementById('onbNextBtn');
+    if (nextBtn) {
+      if (currentOnbSlide === TOTAL_ONB_SLIDES - 1) {
+        nextBtn.innerHTML = '<span>ENTER VEGA 🚀</span>';
+        nextBtn.style.background = '#30D158';
+        nextBtn.style.color = '#000';
+      } else {
+        nextBtn.innerHTML = '<span>NEXT</span>';
+        nextBtn.style.background = '#8B5CF6';
+        nextBtn.style.color = '#fff';
+      }
+    }
+  }
+
+  function nextOnbSlide() {
+    if (currentOnbSlide < TOTAL_ONB_SLIDES - 1) {
+      currentOnbSlide++;
+      updateOnbSlideView();
+    } else {
+      hideOnboarding();
+    }
+  }
+
+  function prevOnbSlide() {
+    if (currentOnbSlide > 0) {
+      currentOnbSlide--;
+      updateOnbSlideView();
+    }
+  }
+
   // Initial Boot
-  checkAppLockOnBoot();
+  initAppExperience();
   fetchAllData();
   setInterval(fetchAllData, 10000);
   setTimeout(() => checkAppUpdates(false), 2500);
