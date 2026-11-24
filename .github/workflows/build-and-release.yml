@@ -1,0 +1,107 @@
+name: Vega CI/CD Build & Release
+
+on:
+  push:
+    branches: [ main ]
+    tags:
+      - 'v*'
+  workflow_dispatch: # Allows manual trigger from GitHub UI
+
+jobs:
+  build-apk:
+    name: Build & Sign Standalone Android APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: ☕ Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: 🤖 Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: 📦 Install Android Build Tools & Platform
+        run: |
+          sdkmanager "platforms;android-34" "build-tools;34.0.0"
+
+      - name: 🚀 Build Standalone APK
+        run: |
+          BUILD_TOOLS="$ANDROID_HOME/build-tools/34.0.0"
+          PLATFORM_JAR="$ANDROID_HOME/platforms/android-34/android.jar"
+          PROJ_DIR="android_native"
+          WEB_DIR="web_preview"
+          OUT_DIR="$PROJ_DIR/build/apk"
+
+          # 1. Sync web assets
+          mkdir -p $PROJ_DIR/assets $PROJ_DIR/res/drawable $PROJ_DIR/res/values
+          cp -r $WEB_DIR/* $PROJ_DIR/assets/
+          cp $WEB_DIR/icon-192.png $PROJ_DIR/res/drawable/icon.png
+          mkdir -p $PROJ_DIR/build/gen $PROJ_DIR/build/obj $OUT_DIR
+
+          # 2. AAPT2 Compile & Link
+          $BUILD_TOOLS/aapt2 compile --dir $PROJ_DIR/res -o $PROJ_DIR/build/compiled_res.zip
+          $BUILD_TOOLS/aapt2 link $PROJ_DIR/build/compiled_res.zip -I $PLATFORM_JAR \
+            --manifest $PROJ_DIR/AndroidManifest.xml \
+            --java $PROJ_DIR/build/gen \
+            -o $OUT_DIR/base.apk \
+            -A $PROJ_DIR/assets --auto-add-overlay
+
+          # 3. Compile Java Source
+          javac -cp $PLATFORM_JAR -d $PROJ_DIR/build/obj \
+            $PROJ_DIR/build/gen/com/vega/trader/R.java \
+            $PROJ_DIR/src/com/vega/trader/MainActivity.java \
+            -source 8 -target 8 -Xlint:-options
+
+          # 4. Convert Bytecode to Dalvik DEX
+          cd $PROJ_DIR/build/obj
+          $BUILD_TOOLS/d8 --lib $PLATFORM_JAR --min-api 24 --output ../apk com/vega/trader/*.class
+          cd ../apk
+
+          # 5. Add DEX into base.apk
+          $BUILD_TOOLS/aapt add base.apk classes.dex
+
+          # 6. Align APK
+          $BUILD_TOOLS/zipalign -p -f 4 base.apk vega-aligned.apk
+
+          # 7. Generate Release Keystore & Sign
+          keytool -genkeypair -keystore vega-release.keystore -alias vega -keyalg RSA -keysize 2048 -validity 10000 \
+            -storepass vegakeystore -keypass vegakeystore \
+            -dname "CN=Meet Pandya, OU=Trading, O=Vega, L=Mumbai, ST=Maharashtra, C=IN"
+          
+          $BUILD_TOOLS/apksigner sign --ks vega-release.keystore --ks-pass pass:vegakeystore \
+            --key-pass pass:vegakeystore --out Vega.apk vega-aligned.apk
+
+          $BUILD_TOOLS/apksigner verify Vega.apk
+          echo "Build finished successfully."
+          cd ../../..
+          cp $OUT_DIR/Vega.apk ./Vega.apk
+
+      - name: 📤 Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Vega-Android-APK
+          path: Vega.apk
+
+      - name: 🏷️ Create GitHub Release (On Push or Tag)
+        if: startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/main'
+        uses: softprops/action-gh-release@v2
+        with:
+          name: Vega Release ${{ github.ref_name }}
+          tag_name: ${{ github.ref_name }}
+          files: Vega.apk
+          body: |
+            ### 🚀 Vega Institutional F&O Ledger
+            Automated build for Meet Pandya.
+            
+            - **Cloud Sync:** Supabase PostgreSQL (AWS Mumbai)
+            - **Broker Integration:** DhanHQ API v2
+            - **Features:** Dual-card neo-banking ledger, scrubbable equity curve, exact Dhan fee breakdown.
+            
+            **Installation:** Download `Vega.apk` directly to your Android device and tap to install!
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,20 @@
+# Security & Secrets
+.env
+*.env
+local.properties
+
+# Flutter / Dart
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+build/
+
+# Android
+android/.gradle/
+android/app/build/
+android/local.properties
+android_native/build/
+*.keystore
+node_modules/
+*.apk

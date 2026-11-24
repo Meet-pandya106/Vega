@@ -1,0 +1,45 @@
+name: dhan_fo_ledger
+description: "Personal F&O Trading Ledger & Accounting Mobile App with Dhan Brokerage and Tax Calculations"
+publish_to: "none"
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.2.0 <4.0.0"
+  flutter: ">=3.16.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  
+  # State Management & DI
+  flutter_riverpod: ^2.5.1
+  
+  # Backend & Storage
+  supabase_flutter: ^2.5.6
+  flutter_secure_storage: ^9.0.0
+  shared_preferences: ^2.2.3
+
+  # UI, Icons & Fonts
+  cupertino_icons: ^1.0.6
+  google_fonts: ^6.2.1
+  intl: ^0.19.0
+  
+  # Charts & Heatmaps
+  fl_chart: ^0.68.0
+  table_calendar: ^3.1.2
+
+  # Security & Biometrics
+  local_auth: ^2.2.0
+
+  # File / CSV Import
+  file_picker: ^8.0.0
+  csv: ^6.0.0
+  http: ^1.2.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.2
+
+flutter:
+  uses-material-design: true
