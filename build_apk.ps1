@@ -42,10 +42,11 @@ Write-Host "==> 6. Aligning APK with zipalign..." -ForegroundColor Cyan
 & $zipalign -p -f 4 base.apk vega-aligned.apk
 
 Write-Host "==> 7. Signing APK with apksigner..." -ForegroundColor Cyan
-if (-not (Test-Path vega-release.keystore)) {
-    & $keytool -genkeypair -keystore vega-release.keystore -alias vega -keyalg RSA -keysize 2048 -validity 10000 -storepass vegakeystore -keypass vegakeystore -dname "CN=Meet Pandya, OU=Trading, O=Vega, L=Mumbai, ST=Maharashtra, C=IN"
+$keystorePath = "$projDir\vega-release.keystore"
+if (-not (Test-Path $keystorePath)) {
+    & $keytool -genkeypair -keystore $keystorePath -alias vega -keyalg RSA -keysize 2048 -validity 10000 -storepass vegakeystore -keypass vegakeystore -dname "CN=Meet Pandya, OU=Trading, O=Vega, L=Mumbai, ST=Maharashtra, C=IN"
 }
-cmd.exe /c "`"$apksigner`" sign --ks vega-release.keystore --ks-pass pass:vegakeystore --key-pass pass:vegakeystore --out Vega.apk vega-aligned.apk"
+cmd.exe /c "`"$apksigner`" sign --ks `"$keystorePath`" --ks-pass pass:vegakeystore --key-pass pass:vegakeystore --out Vega.apk vega-aligned.apk"
 cmd.exe /c "`"$apksigner`" verify Vega.apk"
 
 Copy-Item "Vega.apk" -Destination "c:\Personal Application\Vega.apk" -Force

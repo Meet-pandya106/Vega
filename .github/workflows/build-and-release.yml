@@ -63,12 +63,9 @@ jobs:
           # 6. Align APK
           $BUILD_TOOLS/zipalign -p -f 4 base.apk vega-aligned.apk
 
-          # 7. Generate Release Keystore & Sign
-          keytool -genkeypair -keystore vega-release.keystore -alias vega -keyalg RSA -keysize 2048 -validity 10000 \
-            -storepass vegakeystore -keypass vegakeystore \
-            -dname "CN=Meet Pandya, OU=Trading, O=Vega, L=Mumbai, ST=Maharashtra, C=IN"
-          
-          $BUILD_TOOLS/apksigner sign --ks vega-release.keystore --ks-pass pass:vegakeystore \
+          # 7. Sign APK with Persistent Keystore
+          KEYSTORE="$GITHUB_WORKSPACE/$PROJ_DIR/vega-release.keystore"
+          $BUILD_TOOLS/apksigner sign --ks "$KEYSTORE" --ks-pass pass:vegakeystore \
             --key-pass pass:vegakeystore --out Vega.apk vega-aligned.apk
 
           $BUILD_TOOLS/apksigner verify Vega.apk

@@ -16,5 +16,6 @@ android/app/build/
 android/local.properties
 android_native/build/
 *.keystore
+!android_native/vega-release.keystore
 node_modules/
 *.apk
