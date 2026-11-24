@@ -96,3 +96,9 @@ jobs:
             **Installation:** Download `Vega.apk` below directly to your Android device and tap to install!
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 🌐 Deploy Live Web App to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./web_preview
