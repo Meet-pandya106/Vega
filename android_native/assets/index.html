@@ -838,6 +838,134 @@
       background: #FFD60A;
     }
 
+    /* MONTHLY CAPITAL TARGET TRACKER */
+    .target-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 16px;
+      margin-top: 10px;
+      margin-bottom: 14px;
+      transition: all 0.2s ease;
+    }
+    .target-card:hover {
+      border-color: var(--border-prominent);
+    }
+    .target-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+    .target-card-eyebrow {
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: var(--text-muted);
+    }
+    .target-card-goal {
+      font-size: 15px;
+      font-weight: 800;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text-main);
+      margin-top: 2px;
+    }
+    .target-config-pill {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 5px 10px;
+      border-radius: 10px;
+      font-size: 11px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .target-config-pill:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: var(--border-prominent);
+    }
+    .target-card-body {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .target-ring-wrapper {
+      position: relative;
+      width: 72px;
+      height: 72px;
+      flex-shrink: 0;
+    }
+    .target-ring-svg {
+      transform: rotate(-90deg);
+    }
+    .target-ring-bg {
+      fill: none;
+      stroke: rgba(255, 255, 255, 0.06);
+      stroke-width: 6;
+    }
+    .target-ring-meter {
+      fill: none;
+      stroke: url(#targetRingGrad);
+      stroke-width: 6;
+      stroke-linecap: round;
+      stroke-dasharray: 188.5;
+      stroke-dashoffset: 188.5;
+      transition: stroke-dashoffset 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .target-ring-label {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .target-ring-pct {
+      font-size: 14px;
+      font-weight: 900;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text-main);
+    }
+    .target-details-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px 12px;
+      flex: 1;
+    }
+    .target-stat-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .target-stat-name {
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+    }
+    .target-stat-val {
+      font-size: 13px;
+      font-weight: 800;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text-main);
+    }
+    .target-status-footer {
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px dashed var(--border);
+      font-size: 11px;
+      color: var(--text-sub);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+
 
     /* BROKERAGE-GRADE APP LOCK OVERLAY */
     .lock-overlay {
@@ -1427,6 +1555,65 @@
         </div>
       </div>
 
+      <!-- MONTHLY CAPITAL TARGET TRACKER -->
+      <div class="target-card">
+        <div class="target-card-header">
+          <div>
+            <div class="target-card-eyebrow" id="targetMonthLabel">NOVEMBER 2026 TARGET</div>
+            <div class="target-card-goal" id="targetGoalDisplay">Goal: ₹50,000.00 Net</div>
+          </div>
+          <button class="target-config-pill" onclick="openTargetModal()">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            <span>Set Target</span>
+          </button>
+        </div>
+
+        <div class="target-card-body">
+          <!-- Circular Progress Ring -->
+          <div class="target-ring-wrapper">
+            <svg class="target-ring-svg" width="72" height="72" viewBox="0 0 72 72">
+              <defs>
+                <linearGradient id="targetRingGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#0A84FF"/>
+                  <stop offset="100%" stop-color="#30D158"/>
+                </linearGradient>
+              </defs>
+              <circle class="target-ring-bg" cx="36" cy="36" r="30"/>
+              <circle class="target-ring-meter" id="targetRingMeter" cx="36" cy="36" r="30"/>
+            </svg>
+            <div class="target-ring-label">
+              <span class="target-ring-pct" id="targetRingPct">0%</span>
+            </div>
+          </div>
+
+          <!-- Target Stats Grid -->
+          <div class="target-details-grid">
+            <div class="target-stat-item">
+              <span class="target-stat-name">MTD Net Realized</span>
+              <span class="target-stat-val val-green" id="targetMtdRealized">₹0.00</span>
+            </div>
+            <div class="target-stat-item">
+              <span class="target-stat-name">Remaining Gap</span>
+              <span class="target-stat-val" id="targetGapRemaining">₹50,000.00</span>
+            </div>
+            <div class="target-stat-item">
+              <span class="target-stat-name">Daily Run-Rate Needed</span>
+              <span class="target-stat-val" id="targetRunRateNeeded">₹2,500 / day</span>
+            </div>
+            <div class="target-stat-item">
+              <span class="target-stat-name">Trading Days Left</span>
+              <span class="target-stat-val" id="targetDaysLeft">0 days</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="target-status-footer" id="targetStatusFooter">
+          <span class="status-dot dot-live"></span>
+          <span id="targetStatusMessage">Trajectory active. Target ₹50k net take-home.</span>
+        </div>
+      </div>
+
+
 
       <!-- PROFESSIONAL SCRUBBABLE EQUITY CURVE -->
       <div class="chart-container">
@@ -1952,7 +2139,7 @@
       </button>
 
       <div style="margin-top:auto; padding-top:16px; border-top:1px solid var(--border); font-size:11px; color:var(--text-sub); text-align:center;">
-        Vega <span id="drawerVerTag">v1.0.12</span> • Personal F&O Ledger<br>
+        Vega <span id="drawerVerTag">v1.0.13</span> • Personal F&O Ledger<br>
         Exact Dhan Brokerage Engine • Instant OTA
       </div>
     </div>
@@ -1982,6 +2169,37 @@
           <span>SAVE PASSCODE</span>
         </button>
       </div>
+    </div>
+  </div>
+
+  <!-- MONTHLY TARGET CONFIGURATION MODAL -->
+  <div class="modal-sheet" id="targetModal" onclick="closeTargetModal()">
+    <div class="sheet-card" onclick="event.stopPropagation()">
+      <div class="sheet-notch"></div>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+        <div>
+          <h3 style="font-size:18px; font-weight:800;">Set Monthly Target</h3>
+          <p style="font-size:12px; color:var(--text-muted); margin-top:2px;">Define your net capital goal for the current month</p>
+        </div>
+        <button class="round-action-btn" onclick="closeTargetModal()" style="width:32px; height:32px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+      </div>
+
+      <!-- Quick Preset Target Chips -->
+      <div style="display:flex; gap:6px; margin-bottom:14px; overflow-x:auto;">
+        <div class="time-chip" onclick="setPresetTarget(25000, this)">₹25k</div>
+        <div class="time-chip active" id="chip-target-50k" onclick="setPresetTarget(50000, this)">₹50k</div>
+        <div class="time-chip" onclick="setPresetTarget(100000, this)">₹1 Lakh</div>
+        <div class="time-chip" onclick="setPresetTarget(200000, this)">₹2 Lakh</div>
+      </div>
+
+      <div class="form-group" style="margin-bottom:14px;">
+        <label class="form-label">Monthly Net Goal (₹)</label>
+        <input type="number" id="targetGoalInput" class="input-box" value="50000" step="5000" placeholder="e.g. 50000">
+      </div>
+
+      <button class="submit-btn" onclick="saveMonthlyTarget()">
+        <span>LOCK MONTHLY TARGET</span>
+      </button>
     </div>
   </div>
 
@@ -2264,7 +2482,10 @@
     // 8. Institutional KPI & Analytics Terminal
     renderInstitutionalAnalytics(totals);
 
-    // 9. Daily Risk Kill Switch
+    // 9. Monthly Capital Target Tracker
+    renderMonthlyTargetTracker(totals);
+
+    // 10. Daily Risk Kill Switch
     checkKillSwitchStatus(totals.todayNet);
   }
 
@@ -2523,6 +2744,147 @@
     alert(summary);
   }
 
+
+
+  // ========================================================
+  // MONTHLY CAPITAL TARGET ENGINE
+  // ========================================================
+  function getMonthlyTarget() {
+    const val = parseFloat(localStorage.getItem('vega_monthly_target'));
+    return (val && val > 0) ? val : 50000;
+  }
+
+  function setPresetTarget(amt, el) {
+    document.getElementById('targetGoalInput').value = amt;
+    document.querySelectorAll('#targetModal .time-chip').forEach(c => c.classList.remove('active'));
+    if (el) el.classList.add('active');
+  }
+
+  function openTargetModal() {
+    const currentTarget = getMonthlyTarget();
+    document.getElementById('targetGoalInput').value = currentTarget;
+    document.querySelectorAll('#targetModal .time-chip').forEach(c => {
+      c.classList.remove('active');
+      if (c.innerText.includes('50k') && currentTarget === 50000) c.classList.add('active');
+    });
+    document.getElementById('targetModal').classList.add('show');
+  }
+
+  function closeTargetModal() {
+    document.getElementById('targetModal').classList.remove('show');
+  }
+
+  function saveMonthlyTarget() {
+    const val = parseFloat(document.getElementById('targetGoalInput').value);
+    if (!val || val <= 0) {
+      alert('Please enter a valid target goal amount.');
+      return;
+    }
+    localStorage.setItem('vega_monthly_target', val.toString());
+    closeTargetModal();
+    renderAll();
+  }
+
+  function renderMonthlyTargetTracker(totals) {
+    const target = getMonthlyTarget();
+    const now = new Date();
+    const currentYear = now.getFullYear();
+    const currentMonth = now.getMonth();
+    const monthNames = ['JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE','JULY','AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER'];
+
+    const monthLabel = document.getElementById('targetMonthLabel');
+    if (monthLabel) monthLabel.innerText = `${monthNames[currentMonth]} ${currentYear} TARGET`;
+
+    const goalDisplay = document.getElementById('targetGoalDisplay');
+    if (goalDisplay) goalDisplay.innerText = `Goal: ₹${target.toLocaleString('en-IN', {minimumFractionDigits: 2})} Net`;
+
+    let mtdNet = 0;
+    cachedTrades.forEach(t => {
+      if (!t.entry_time) return;
+      const [tY, tM] = t.entry_time.slice(0, 10).split('-').map(Number);
+      if (tY === currentYear && tM === (currentMonth + 1)) {
+        mtdNet += (parseFloat(t.net_pnl) || 0);
+      }
+    });
+
+    const mtdEl = document.getElementById('targetMtdRealized');
+    if (mtdEl) {
+      mtdEl.innerText = `${mtdNet >= 0 ? '+' : ''}₹${mtdNet.toLocaleString('en-IN', {minimumFractionDigits: 2})}`;
+      mtdEl.className = `target-stat-val ${mtdNet >= 0 ? 'val-green' : 'val-red'}`;
+    }
+
+    const gap = Math.max(0, target - mtdNet);
+    const gapEl = document.getElementById('targetGapRemaining');
+    if (gapEl) {
+      if (mtdNet >= target) {
+        gapEl.innerText = 'Goal Reached!';
+        gapEl.className = 'target-stat-val val-green';
+      } else {
+        gapEl.innerText = `₹${gap.toLocaleString('en-IN', {minimumFractionDigits: 2})}`;
+        gapEl.className = 'target-stat-val';
+      }
+    }
+
+    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+    let weekdaysLeft = 0;
+    const currentDay = now.getDate();
+    for (let d = currentDay; d <= daysInMonth; d++) {
+      const dayOfWeek = new Date(currentYear, currentMonth, d).getDay();
+      if (dayOfWeek !== 0 && dayOfWeek !== 6) {
+        weekdaysLeft++;
+      }
+    }
+
+    const daysLeftEl = document.getElementById('targetDaysLeft');
+    if (daysLeftEl) {
+      daysLeftEl.innerText = `${weekdaysLeft} session${weekdaysLeft === 1 ? '' : 's'}`;
+    }
+
+    const runRateEl = document.getElementById('targetRunRateNeeded');
+    if (runRateEl) {
+      if (mtdNet >= target) {
+        runRateEl.innerText = 'Target Exceeded';
+        runRateEl.className = 'target-stat-val val-green';
+      } else if (weekdaysLeft > 0) {
+        const dailyReq = gap / weekdaysLeft;
+        runRateEl.innerText = `₹${Math.round(dailyReq).toLocaleString('en-IN')} / session`;
+        runRateEl.className = 'target-stat-val';
+      } else {
+        runRateEl.innerText = 'Month Concluded';
+        runRateEl.className = 'target-stat-val';
+      }
+    }
+
+    const pct = target > 0 ? Math.round((mtdNet / target) * 100) : 0;
+    const clampedPct = Math.max(0, Math.min(100, pct));
+    const ringMeter = document.getElementById('targetRingMeter');
+    const ringPct = document.getElementById('targetRingPct');
+    const circumference = 188.5;
+
+    if (ringMeter) {
+      const offset = circumference - (clampedPct / 100) * circumference;
+      ringMeter.style.strokeDashoffset = offset;
+    }
+    if (ringPct) {
+      ringPct.innerText = `${pct}%`;
+      ringPct.style.color = pct >= 100 ? 'var(--profit)' : (pct < 0 ? 'var(--loss)' : 'var(--text-main)');
+    }
+
+    const statusMsg = document.getElementById('targetStatusMessage');
+    if (statusMsg) {
+      if (mtdNet >= target) {
+        statusMsg.innerText = `Monthly goal completed! Realized ₹${(mtdNet - target).toFixed(2)} surplus. Capital protected.`;
+      } else if (pct >= 75) {
+        statusMsg.innerText = `75%+ achieved. Final push required — maintain strict risk sizing.`;
+      } else if (pct >= 50) {
+        statusMsg.innerText = `Halfway to goal. Execution discipline is strong.`;
+      } else if (mtdNet < 0) {
+        statusMsg.innerText = `Under high-water mark. Prioritize A+ setups and avoid revenge trading.`;
+      } else {
+        statusMsg.innerText = `Trajectory active. Target ₹${Math.round(target/1000)}k net take-home.`;
+      }
+    }
+  }
 
   function renderInstitutionalAnalytics(totals) {
     let grossWins = 0;
@@ -3056,7 +3418,7 @@
   // ========================================================
   // IN-APP OVER-THE-AIR (OTA) AUTO-UPDATER
   // ========================================================
-  const APP_VERSION = 'v1.0.12';
+  const APP_VERSION = 'v1.0.13';
   const GITHUB_REPO = 'Meet-pandya106/Vega';
   let latestReleaseData = null;
 
