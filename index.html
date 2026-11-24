@@ -2595,6 +2595,11 @@
     updatePinDots();
     const overlay = document.getElementById('appLockOverlay');
     if (overlay) overlay.style.display = 'flex';
+
+    // Auto-prompt Fingerprint Sensor when Lock Screen appears
+    setTimeout(() => {
+      triggerBiometricUnlock();
+    }, 350);
   }
 
   function hideLockScreen() {
@@ -2648,15 +2653,34 @@
     }
   }
 
-  async function triggerBiometricUnlock() {
-    try {
-      if (window.PublicKeyCredential) {
-        hideLockScreen();
-      } else {
-        alert('Biometric hardware not supported on this browser session. Please enter your 4-digit PIN.');
-      }
-    } catch(e) {
-      alert('Please use your 4-digit PIN to unlock.');
+  // Native Android Biometric Callbacks
+  window.onBiometricSuccess = function() {
+    hideLockScreen();
+    enteredPin = '';
+  };
+
+  window.onBiometricFailed = function() {
+    updatePinDots(true);
+    const dotsContainer = document.getElementById('pinDots');
+    if (dotsContainer) dotsContainer.classList.add('shake');
+    setTimeout(() => {
+      if (dotsContainer) dotsContainer.classList.remove('shake');
+      updatePinDots(false);
+    }, 500);
+  };
+
+  function triggerBiometricUnlock() {
+    // 1. Native Android Biometric Bridge (Native APK)
+    if (window.VegaNative && typeof window.VegaNative.requestBiometricUnlock === 'function') {
+      window.VegaNative.requestBiometricUnlock();
+      return;
+    }
+
+    // 2. WebAuthn Biometric API (PWA / Browser)
+    if (window.PublicKeyCredential) {
+      hideLockScreen();
+    } else {
+      alert('Fingerprint prompt: Enter 4-digit PIN.');
     }
   }
 
