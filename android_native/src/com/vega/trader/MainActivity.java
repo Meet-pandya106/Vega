@@ -8,24 +8,18 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 public class MainActivity extends Activity {
 
     private WebView mWebView;
 
-    @SuppressLint({"SetJavaScriptEnabled", "JavascriptInterface"})
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,9 +51,6 @@ public class MainActivity extends Activity {
         settings.setBuiltInZoomControls(false);
         settings.setDisplayZoomControls(false);
         settings.setCacheMode(WebSettings.LOAD_DEFAULT);
-
-        // Native Bridge: Executes direct HTTPS calls to DhanHQ servers without browser CORS restrictions
-        mWebView.addJavascriptInterface(new DhanNativeBridge(), "DhanNativeBridge");
 
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
@@ -98,42 +89,6 @@ public class MainActivity extends Activity {
 
         setContentView(mWebView);
         mWebView.loadUrl("file:///android_asset/index.html");
-    }
-
-    /**
-     * Native Android Java Bridge for DhanHQ API
-     * Direct HTTP sockets do not trigger browser CORS preflights, ensuring 100% reliable real-time sync.
-     */
-    public class DhanNativeBridge {
-        @JavascriptInterface
-        public String executeGet(String endpointUrl, String clientId, String accessToken) {
-            try {
-                URL url = new URL(endpointUrl);
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setRequestMethod("GET");
-                conn.setRequestProperty("client-id", clientId);
-                conn.setRequestProperty("access-token", accessToken);
-                conn.setRequestProperty("Accept", "application/json");
-                conn.setRequestProperty("Content-Type", "application/json");
-                conn.setConnectTimeout(8000);
-                conn.setReadTimeout(8000);
-
-                int code = conn.getResponseCode();
-                InputStream is = (code >= 200 && code < 400) ? conn.getInputStream() : conn.getErrorStream();
-                if (is == null) return "{\"error\":\"No response stream\",\"statusCode\":" + code + "}";
-
-                BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-                StringBuilder sb = new StringBuilder();
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    sb.append(line);
-                }
-                reader.close();
-                return sb.toString();
-            } catch (Exception e) {
-                return "{\"error\":\"" + e.getMessage() + "\"}";
-            }
-        }
     }
 
     @Override

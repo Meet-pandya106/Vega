@@ -768,10 +768,6 @@
     </div>
     
     <div class="header-right">
-      <button class="dhan-sync-pill" onclick="openDhanModal()" title="DhanHQ Sync">
-        <span class="dhan-dot"></span>
-        <span>Dhan</span>
-      </button>
       <div class="round-action-btn" onclick="togglePrivacy()" title="Privacy Mode">
         <svg id="privacyIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
       </div>
@@ -793,13 +789,13 @@
 
       <!-- STACKED DUAL CARDS -->
       <div class="card-stack-container">
-        <!-- Back Yellow Card (Dhan Margin) -->
+        <!-- Back Yellow Card (Dhan Trading Profile) -->
         <div class="back-card">
           <div class="back-card-chip">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
-            <span>DHAN • MEET PANDYA</span>
+            <span>DHAN TRADING PROFILE</span>
           </div>
-          <div class="back-card-number">ID: 1109849315</div>
+          <div class="back-card-number">MEET PANDYA • INDEPENDENT</div>
         </div>
 
         <!-- Front Purple Card (Total Realized Net Capital) -->
@@ -1107,88 +1103,94 @@
     </div>
   </div>
 
-  <!-- FAST TRADE PUNCH MODAL -->
+  <!-- MANUAL FAST TRADE PUNCH MODAL -->
   <div class="modal-sheet" id="punchModal" onclick="closePunchModal()">
     <div class="sheet-card" onclick="event.stopPropagation()">
       <div class="sheet-notch"></div>
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
-        <h3 style="font-size:18px; font-weight:800;">Log Execution</h3>
+        <div>
+          <h3 style="font-size:18px; font-weight:800;">Log Execution</h3>
+          <p style="font-size:12px; color:var(--text-muted); margin-top:2px;">Exact Dhan fees & net take-home calculation</p>
+        </div>
         <button class="round-action-btn" onclick="closePunchModal()" style="width:32px; height:32px;">✕</button>
+      </div>
+
+      <!-- Quick Index Preset Chips -->
+      <div style="display:flex; gap:6px; margin-bottom:14px; overflow-x:auto;">
+        <div class="time-chip active" id="chip-nifty" onclick="setPreset('NIFTY', 50, this)">NIFTY (50)</div>
+        <div class="time-chip" id="chip-banknifty" onclick="setPreset('BANKNIFTY', 15, this)">BANKNIFTY (15)</div>
+        <div class="time-chip" id="chip-finnifty" onclick="setPreset('FINNIFTY', 25, this)">FINNIFTY (25)</div>
+        <div class="time-chip" id="chip-sensex" onclick="setPreset('SENSEX', 10, this)">SENSEX (10)</div>
       </div>
 
       <div class="form-row">
         <div class="form-group">
           <label class="form-label">Contract Symbol</label>
-          <input type="text" id="symInput" class="input-box" value="NIFTY 24600 CE">
+          <input type="text" id="symInput" class="input-box" value="NIFTY 24500 CE" oninput="updateLiveCalc()">
         </div>
         <div class="form-group">
           <label class="form-label">Total Qty</label>
-          <input type="number" id="qtyInput" class="input-box" value="50">
+          <input type="number" id="qtyInput" class="input-box" value="50" oninput="updateLiveCalc()">
         </div>
       </div>
 
       <div class="form-row">
         <div class="form-group">
-          <label class="form-label">Entry Buy Price (₹)</label>
-          <input type="number" id="entryInput" class="input-box" value="130.00" step="0.5">
+          <label class="form-label">Entry Price (₹)</label>
+          <input type="number" id="entryInput" class="input-box" value="120.00" step="0.5" oninput="updateLiveCalc()">
         </div>
         <div class="form-group">
-          <label class="form-label">Exit Sell Price (₹)</label>
-          <input type="number" id="exitInput" class="input-box" value="168.50" step="0.5">
+          <label class="form-label">Exit Price (₹)</label>
+          <input type="number" id="exitInput" class="input-box" value="155.00" step="0.5" oninput="updateLiveCalc()">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Strategy Setup</label>
+          <select id="strategyInput" class="input-box" style="height:44px; background:var(--card-subtle); color:var(--text-main);">
+            <option value="ORB Scalp">ORB 15M Scalp</option>
+            <option value="VWAP Reversal">VWAP Support/Reversal</option>
+            <option value="Breakout Momentum">Day High/Low Breakout</option>
+            <option value="Mean Reversion">Mean Reversion Fade</option>
+            <option value="Hero Zero">Hero Zero Expiry</option>
+            <option value="Manual F&O">Discretionary Setup</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Discipline / Psychology</label>
+          <select id="disciplineInput" class="input-box" style="height:44px; background:var(--card-subtle); color:var(--text-main);">
+            <option value="Followed Plan 🟢">Followed Plan 🟢</option>
+            <option value="Early Exit 🟡">Early Exit 🟡</option>
+            <option value="Chased Entry 🔴">Chased Entry / FOMO 🔴</option>
+            <option value="Overtrading 🔴">Overtrading 🔴</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Live Calculation Card -->
+      <div id="liveCalcBox" style="background:var(--card-subtle); border:1px solid var(--border); border-radius:14px; padding:12px; margin-bottom:14px;">
+        <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:4px;">
+          <span style="color:var(--text-muted);">Points Captured:</span>
+          <strong id="calcPoints" style="color:var(--profit);">+35.00 pts</strong>
+        </div>
+        <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:4px;">
+          <span style="color:var(--text-muted);">Gross Realized P&L:</span>
+          <strong id="calcGross" style="color:var(--profit);">+₹1,750.00</strong>
+        </div>
+        <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:4px;">
+          <span style="color:var(--text-muted);">Dhan Brokerage & Taxes:</span>
+          <strong id="calcFees" style="color:var(--loss);">-₹51.40</strong>
+        </div>
+        <hr class="fee-divider" style="margin:6px 0;">
+        <div style="display:flex; justify-content:space-between; font-size:13px; font-weight:800;">
+          <span style="color:var(--text-main);">Net Take-Home Capital:</span>
+          <strong id="calcNet" style="color:var(--profit); font-size:15px;">+₹1,698.60</strong>
         </div>
       </div>
 
       <button class="submit-btn" onclick="submitQuickTrade()">
-        <span>COMMIT TRADE TO VEGA</span>
-      </button>
-    </div>
-  </div>
-
-  <!-- DHANHQ SYNC MODAL -->
-  <div class="modal-sheet" id="dhanModal" onclick="closeDhanModal()">
-    <div class="sheet-card" onclick="event.stopPropagation()">
-      <div class="sheet-notch"></div>
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
-        <div style="display:flex; align-items:center; gap:8px;">
-          <div class="dhan-dot"></div>
-          <h3 style="font-size:18px; font-weight:800;">DhanHQ Integration</h3>
-        </div>
-        <button class="round-action-btn" onclick="closeDhanModal()" style="width:32px; height:32px;">✕</button>
-      </div>
-
-      <div style="background:var(--card-subtle); padding:14px; border-radius:14px; margin-bottom:14px; border:1px solid var(--border);">
-        <div style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:13px;">
-          <span style="color:var(--text-muted);">Client ID:</span>
-          <strong style="color:var(--text-main); font-family:'JetBrains Mono';">1109849315</strong>
-        </div>
-        <div style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:13px;">
-          <span style="color:var(--text-muted);">Account Holder:</span>
-          <strong style="color:var(--text-main);">MEET PANDYA</strong>
-        </div>
-        <div style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:13px;">
-          <span style="color:var(--text-muted);">Dhan API Key:</span>
-          <strong style="color:var(--card-yellow); font-family:'JetBrains Mono';">5ed5ffea (Active)</strong>
-        </div>
-        <div style="display:flex; justify-content:space-between; font-size:13px;">
-          <span style="color:var(--text-muted);">Database:</span>
-          <strong style="color:var(--profit);">Supabase Cloud 🟢 (ap-south-1)</strong>
-        </div>
-      </div>
-
-      <div class="form-group" style="margin-bottom:12px;">
-        <label class="form-label">Dhan 24-Hour Access Token</label>
-        <input type="password" id="dhanTokenInput" class="input-box" placeholder="Paste 24-hr Access Token" value="">
-        <p style="font-size:11px; color:var(--text-muted); margin-top:5px; line-height:1.4;">
-          Obtained from <b>web.dhan.co</b> ➔ <i>Trading & Data APIs</i> ➔ <b>Generate Access Token</b>.
-        </p>
-      </div>
-
-      <button class="submit-btn" onclick="syncDhanTrades()" id="syncDhanBtn" style="background:#30D158; color:#000;">
-        <span>SYNC TRADES FROM DHAN SERVERS</span>
-      </button>
-
-      <button class="submit-btn" onclick="installPWA()" id="pwaInstallBtn" style="margin-top:10px; background:var(--card-elevated); color:var(--text-main); display:none;">
-        <span>📲 INSTALL VEGA ON ANDROID</span>
+        <span>COMMIT EXECUTION TO VEGA</span>
       </button>
     </div>
   </div>
@@ -1200,7 +1202,6 @@
   // Supabase Cloud Configuration
   const SUPABASE_URL = 'https://trwjzrzphhphqyqbchsa.supabase.co';
   const SUPABASE_KEY = 'sb_publishable_QJynib8WhmA1eoOvsZFcrA_ngjhzz-r';
-  const DHAN_CLIENT_ID = '1109849315';
   let cachedTrades = [];
 
   // PWA Deferred Prompt
@@ -1522,15 +1523,62 @@
     animateNumber('balanceAmount', currentBal, true);
   }
 
+  function setPreset(name, lotQty, el) {
+    document.querySelectorAll('#punchModal .time-chip').forEach(c => c.classList.remove('active'));
+    el.classList.add('active');
+    document.getElementById('symInput').value = `${name} 24500 CE`;
+    document.getElementById('qtyInput').value = lotQty;
+    updateLiveCalc();
+  }
+
+  function updateLiveCalc() {
+    const qty = parseInt(document.getElementById('qtyInput').value) || 0;
+    const entry = parseFloat(document.getElementById('entryInput').value) || 0;
+    const exit = parseFloat(document.getElementById('exitInput').value) || 0;
+
+    const points = exit - entry;
+    const gross = points * qty;
+    // Exact Dhan F&O expenses
+    const brokerage = 40.0;
+    const stt = exit * qty * 0.0010;
+    const exchangeGst = (entry + exit) * qty * 0.0003503 * 1.18;
+    const fees = (qty > 0 && entry > 0 && exit > 0) ? (brokerage + stt + exchangeGst) : 0;
+    const net = gross - fees;
+
+    const isProfit = net >= 0;
+    const ptsEl = document.getElementById('calcPoints');
+    if (ptsEl) {
+      ptsEl.innerText = `${points >= 0 ? '+' : ''}${points.toFixed(2)} pts`;
+      ptsEl.style.color = points >= 0 ? 'var(--profit)' : 'var(--loss)';
+    }
+
+    const grossEl = document.getElementById('calcGross');
+    if (grossEl) {
+      grossEl.innerText = `${gross >= 0 ? '+' : ''}₹${gross.toFixed(2)}`;
+      grossEl.style.color = gross >= 0 ? 'var(--profit)' : 'var(--loss)';
+    }
+
+    const feesEl = document.getElementById('calcFees');
+    if (feesEl) feesEl.innerText = `-₹${fees.toFixed(2)}`;
+
+    const netEl = document.getElementById('calcNet');
+    if (netEl) {
+      netEl.innerText = `${isProfit ? '+' : ''}₹${net.toFixed(2)}`;
+      netEl.style.color = isProfit ? 'var(--profit)' : 'var(--loss)';
+    }
+  }
+
   async function submitQuickTrade() {
     const sym = document.getElementById('symInput').value.trim();
     const qty = parseInt(document.getElementById('qtyInput').value) || 50;
     const entry = parseFloat(document.getElementById('entryInput').value) || 100;
     const exit = parseFloat(document.getElementById('exitInput').value) || 120;
+    const strategy = document.getElementById('strategyInput') ? document.getElementById('strategyInput').value : 'Manual F&O';
+    const discipline = document.getElementById('disciplineInput') ? document.getElementById('disciplineInput').value : 'Followed Plan 🟢';
 
     const points = exit - entry;
     const gross = points * qty;
-    // Dhan exact expense formula
+    // Exact Dhan Brokerage & Regulatory Charges
     const brokerage = 40.0;
     const stt = exit * qty * 0.0010;
     const exchangeGst = (entry + exit) * qty * 0.0003503 * 1.18;
@@ -1540,7 +1588,7 @@
     const tradePayload = {
       symbol: sym,
       asset_category: sym.includes('NIFTY') || sym.includes('SENSEX') ? 'INDEX_FO' : 'STOCK_FO',
-      strategy_name: 'Quick Punch',
+      strategy_name: strategy,
       trade_type: 'INTRADAY',
       status: 'CLOSED',
       is_physical_delivery_risk: false,
@@ -1549,9 +1597,9 @@
       gross_pnl: gross,
       total_charges: fees,
       net_pnl: net,
-      setup_tags: ['Quick Punch'],
-      mistake_tags: [],
-      notes: `Punch: ${qty} qty @ ₹${entry} -> ₹${exit} (Captured ${points.toFixed(1)} pts)`
+      setup_tags: [strategy, discipline],
+      mistake_tags: discipline.includes('🔴') ? [discipline] : [],
+      notes: `Manual Punch: ${qty} Qty @ ₹${entry} -> ₹${exit} (Captured ${points.toFixed(1)} pts) • ${discipline}`
     };
 
     closePunchModal();
@@ -1596,81 +1644,7 @@
     }
   }
 
-  async function syncDhanTrades() {
-    const token = document.getElementById('dhanTokenInput').value.trim();
-    if (!token) {
-      alert('Please enter your 24-hour Dhan Access Token from web.dhan.co (under Trading & Data APIs).');
-      return;
-    }
-
-    const syncBtn = document.getElementById('syncDhanBtn');
-    syncBtn.innerHTML = '<span>CONNECTING TO DHANHQ...</span>';
-
-    try {
-      let rawResponse = '';
-      if (window.DhanNativeBridge) {
-        // Native Android Java Bridge (Bypasses browser CORS & CloudFront checks)
-        rawResponse = window.DhanNativeBridge.executeGet('https://api.dhan.co/v2/trades', DHAN_CLIENT_ID, token);
-      } else {
-        const res = await fetch('https://api.dhan.co/v2/trades', {
-          headers: {
-            'client-id': DHAN_CLIENT_ID,
-            'access-token': token,
-            'Content-Type': 'application/json'
-          }
-        });
-        rawResponse = await res.text();
-      }
-
-      const data = JSON.parse(rawResponse);
-      if (Array.isArray(data)) {
-        alert(`Live Sync Success: Fetched ${data.length} trades directly from DhanHQ! Syncing to Supabase...`);
-        for (const item of data) {
-          const sym = item.tradingSymbol || item.customSymbol || 'F&O Trade';
-          const qty = item.tradedQuantity || 0;
-          const price = item.tradedPrice || 0;
-          const isBuy = (item.transactionType || 'BUY').toUpperCase() === 'BUY';
-          const fees = 40.0 + (price * qty * 0.001);
-          const pnl = isBuy ? -(price * qty) : (price * qty);
-
-          await fetch(`${SUPABASE_URL}/rest/v1/trade_positions`, {
-            method: 'POST',
-            headers: {
-              'apikey': SUPABASE_KEY,
-              'Authorization': `Bearer ${SUPABASE_KEY}`,
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              symbol: sym,
-              asset_category: 'INDEX_FO',
-              strategy_name: 'DhanHQ Live Sync',
-              trade_type: 'INTRADAY',
-              status: 'CLOSED',
-              is_physical_delivery_risk: false,
-              entry_time: item.exchangeTime || new Date().toISOString(),
-              gross_pnl: pnl,
-              total_charges: fees,
-              net_pnl: pnl - fees,
-              setup_tags: ['Dhan Live Fill'],
-              notes: `Executed via DhanHQ at ₹${price} (${qty} Qty)`
-            })
-          });
-        }
-        await fetchTradesFromSupabase();
-        closeDhanModal();
-      } else if (data.errorMessage) {
-        alert(`Dhan API: ${data.errorMessage}`);
-      } else {
-        alert('Dhan Sync complete.');
-      }
-    } catch(e) {
-      alert('Dhan Sync Note: ' + e.message);
-    } finally {
-      syncBtn.innerHTML = '<span>SYNC TRADES FROM DHAN SERVERS</span>';
-    }
-  }
-
-  // Initial fetch and real-time polling every 10 seconds
+  // Load live Supabase database on startup & poll every 10s
   fetchTradesFromSupabase();
   setInterval(() => {
     fetchTradesFromSupabase();

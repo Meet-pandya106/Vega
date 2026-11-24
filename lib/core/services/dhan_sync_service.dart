@@ -1,98 +1,73 @@
-import 'dart:convert';
 import 'package:flutter/foundation.dart';
-import 'package:http/http.dart' as http;
 import 'dhan_calculator_service.dart';
 import 'supabase_service.dart';
 import '../models/dhan_charges.dart';
 
+/// Independent Ledger Service for Manual & Offline Entry
+/// Calculates exact Dhan F&O expenses (Brokerage, STT, GST, Exchange fees)
+/// and syncs directly to Supabase Cloud without requiring broker API keys.
 class DhanSyncService {
-  static const String baseUrl = 'https://api.dhan.co/v2';
-
-  // Configured from your DhanHQ API credentials
-  static const String apiKey = '5ed5ffea';
-  static const String apiSecret = 'fbf30976-489f-4c7c-bf59-cb89da11007b';
-
-  /// Fetch today's executed trades directly from Dhan servers
-  static Future<List<PositionItem>> fetchTodayDhanTrades({required String clientId}) async {
+  /// Commit a manual execution to Supabase with exact Dhan charge calculations
+  static Future<bool> commitManualTrade({
+    required String symbol,
+    required InstrumentType instrumentType,
+    required OrderAction action,
+    required double entryPrice,
+    required double exitPrice,
+    required int quantity,
+    required String strategyName,
+    List<String> setupTags = const [],
+    List<String> mistakeTags = const [],
+    String notes = '',
+  }) async {
     try {
-      final url = Uri.parse('$baseUrl/trades');
-      final response = await http.get(
-        url,
-        headers: {
-          'Content-Type': 'application/json',
-          'client-id': clientId,
-          'access-token': apiSecret, // Dhan accepts Bearer token / secret
-        },
+      final buyPrice = action == OrderAction.buy ? entryPrice : exitPrice;
+      final sellPrice = action == OrderAction.buy ? exitPrice : entryPrice;
+      final points = sellPrice - buyPrice;
+      final grossPnl = points * quantity;
+
+      // Exact Dhan F&O Expense Breakdown
+      final buyCharges = DhanCalculatorService.calculateOrderCharges(
+        instrumentType: instrumentType,
+        action: OrderAction.buy,
+        price: buyPrice,
+        quantity: quantity,
+      );
+      final sellCharges = DhanCalculatorService.calculateOrderCharges(
+        instrumentType: instrumentType,
+        action: OrderAction.sell,
+        price: sellPrice,
+        quantity: quantity,
+      );
+      final totalFees = buyCharges.total + sellCharges.total;
+      final netPnl = grossPnl - totalFees;
+
+      final position = PositionItem(
+        id: DateTime.now().millisecondsSinceEpoch.toString(),
+        symbol: symbol,
+        assetCategory: symbol.contains('NIFTY') || symbol.contains('SENSEX') ? 'INDEX_FO' : 'STOCK_FO',
+        strategyName: strategyName.isNotEmpty ? strategyName : 'Manual Execution',
+        tradeType: 'INTRADAY',
+        status: 'CLOSED',
+        isPhysicalDeliveryRisk: false,
+        entryTime: DateTime.now(),
+        exitTime: DateTime.now(),
+        grossPnl: grossPnl,
+        totalCharges: totalFees,
+        netPnl: netPnl,
+        mistakeTags: mistakeTags,
+        setupTags: setupTags,
+        notes: notes,
       );
 
-      if (response.statusCode == 200) {
-        final List<dynamic> data = jsonDecode(response.body);
-        final List<PositionItem> positions = [];
-
-        for (final item in data) {
-          final symbol = item['tradingSymbol'] ?? item['customSymbol'] ?? 'NIFTY';
-          final action = (item['transactionType'] ?? 'BUY').toString().toUpperCase();
-          final int qty = (item['tradedQuantity'] as num?)?.toInt() ?? 0;
-          final double price = (item['tradedPrice'] as num?)?.toDouble() ?? 0.0;
-          final isBuy = action == 'BUY';
-
-          final isOption = symbol.contains('CE') || symbol.contains('PE');
-          final isStock = !symbol.contains('NIFTY') && !symbol.contains('SENSEX');
-
-          final charges = DhanCalculatorService.calculateOrderCharges(
-            instrumentType: isOption ? InstrumentType.option : InstrumentType.future,
-            action: isBuy ? OrderAction.buy : OrderAction.sell,
-            price: price,
-            quantity: qty,
-          );
-
-          positions.add(PositionItem(
-            id: item['orderId']?.toString() ?? DateTime.now().millisecondsSinceEpoch.toString(),
-            symbol: symbol,
-            assetCategory: isStock ? 'STOCK_FO' : 'INDEX_FO',
-            strategyName: 'Dhan Auto-Sync',
-            tradeType: 'INTRADAY',
-            status: 'CLOSED',
-            isPhysicalDeliveryRisk: isStock && isOption,
-            entryTime: DateTime.tryParse(item['exchangeTime'] ?? '') ?? DateTime.now(),
-            exitTime: DateTime.now(),
-            grossPnl: isBuy ? -(price * qty) : (price * qty),
-            totalCharges: charges.total,
-            netPnl: isBuy ? -(price * qty) - charges.total : (price * qty) - charges.total,
-            mistakeTags: [],
-            setupTags: ['DhanHQ Sync'],
-            notes: 'Synced directly from Dhan servers via DhanHQ API',
-          ));
-        }
-
-        return positions;
-      } else {
-        debugPrint('Dhan API response error: ${response.statusCode} - ${response.body}');
-        return [];
+      final client = SupabaseConfig.client;
+      if (client != null) {
+        await client.from('trade_positions').insert(position.toSupabaseMap());
       }
+      return true;
     } catch (e) {
-      debugPrint('Dhan sync exception: $e');
-      return [];
+      debugPrint('Error committing manual trade: $e');
+      return false;
     }
-  }
-
-  /// Sync Dhan trades into Supabase database automatically
-  static Future<int> syncToSupabase({required String clientId}) async {
-    final trades = await fetchTodayDhanTrades(clientId: clientId);
-    if (trades.isEmpty) return 0;
-
-    final client = SupabaseConfig.client;
-    if (client == null) return 0;
-
-    int syncedCount = 0;
-    for (final pos in trades) {
-      try {
-        await client.from('trade_positions').insert(pos.toSupabaseMap());
-        syncedCount++;
-      } catch (e) {
-        debugPrint('Supabase trade insert error: $e');
-      }
-    }
-    return syncedCount;
   }
 }
