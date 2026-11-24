@@ -1607,33 +1607,74 @@
     syncBtn.innerHTML = '<span>CONNECTING TO DHANHQ...</span>';
 
     try {
-      const res = await fetch('https://api.dhan.co/v2/trades', {
-        headers: {
-          'client-id': DHAN_CLIENT_ID,
-          'access-token': token,
-          'Content-Type': 'application/json'
-        }
-      });
-
-      if (res.status === 200) {
-        const trades = await res.json();
-        alert(`Successfully fetched ${trades.length} trades from Dhan! Syncing to Supabase...`);
-        closeDhanModal();
+      let rawResponse = '';
+      if (window.DhanNativeBridge) {
+        // Native Android Java Bridge (Bypasses browser CORS & CloudFront checks)
+        rawResponse = window.DhanNativeBridge.executeGet('https://api.dhan.co/v2/trades', DHAN_CLIENT_ID, token);
       } else {
-        const err = await res.json();
-        alert(`Dhan response: ${err.errorMessage || 'Invalid or expired token'}`);
+        const res = await fetch('https://api.dhan.co/v2/trades', {
+          headers: {
+            'client-id': DHAN_CLIENT_ID,
+            'access-token': token,
+            'Content-Type': 'application/json'
+          }
+        });
+        rawResponse = await res.text();
+      }
+
+      const data = JSON.parse(rawResponse);
+      if (Array.isArray(data)) {
+        alert(`Live Sync Success: Fetched ${data.length} trades directly from DhanHQ! Syncing to Supabase...`);
+        for (const item of data) {
+          const sym = item.tradingSymbol || item.customSymbol || 'F&O Trade';
+          const qty = item.tradedQuantity || 0;
+          const price = item.tradedPrice || 0;
+          const isBuy = (item.transactionType || 'BUY').toUpperCase() === 'BUY';
+          const fees = 40.0 + (price * qty * 0.001);
+          const pnl = isBuy ? -(price * qty) : (price * qty);
+
+          await fetch(`${SUPABASE_URL}/rest/v1/trade_positions`, {
+            method: 'POST',
+            headers: {
+              'apikey': SUPABASE_KEY,
+              'Authorization': `Bearer ${SUPABASE_KEY}`,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              symbol: sym,
+              asset_category: 'INDEX_FO',
+              strategy_name: 'DhanHQ Live Sync',
+              trade_type: 'INTRADAY',
+              status: 'CLOSED',
+              is_physical_delivery_risk: false,
+              entry_time: item.exchangeTime || new Date().toISOString(),
+              gross_pnl: pnl,
+              total_charges: fees,
+              net_pnl: pnl - fees,
+              setup_tags: ['Dhan Live Fill'],
+              notes: `Executed via DhanHQ at ₹${price} (${qty} Qty)`
+            })
+          });
+        }
+        await fetchTradesFromSupabase();
+        closeDhanModal();
+      } else if (data.errorMessage) {
+        alert(`Dhan API: ${data.errorMessage}`);
+      } else {
+        alert('Dhan Sync complete.');
       }
     } catch(e) {
-      alert('Dhan Sync note: Browser security (CORS) prevents direct fetch from browser. Use backend sync service.');
+      alert('Dhan Sync Note: ' + e.message);
     } finally {
       syncBtn.innerHTML = '<span>SYNC TRADES FROM DHAN SERVERS</span>';
     }
   }
 
-  // Load live Supabase database on startup
+  // Initial fetch and real-time polling every 10 seconds
   fetchTradesFromSupabase();
+  setInterval(() => {
+    fetchTradesFromSupabase();
+  }, 10000);
 </script>
-</body>
-</html>
 </body>
 </html>
