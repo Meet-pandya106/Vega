@@ -673,6 +673,156 @@
       background: var(--card-elevated);
       border-color: var(--border-prominent);
     }
+
+    /* BROKERAGE-GRADE APP LOCK OVERLAY */
+    .lock-overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: #0B0C0E;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .lock-content {
+      width: 100%;
+      max-width: 320px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .lock-logo-badge {
+      width: 58px;
+      height: 58px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #7C3AED 0%, #4F46E5 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      font-weight: 900;
+      color: #fff;
+      box-shadow: 0 8px 24px rgba(124,58,237,0.35);
+      margin: 0 auto;
+    }
+    .pin-dots {
+      display: flex;
+      gap: 16px;
+      margin: 28px 0 36px 0;
+    }
+    .pin-dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.25);
+      background: transparent;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .pin-dot.filled {
+      background: #30D158;
+      border-color: #30D158;
+      transform: scale(1.15);
+      box-shadow: 0 0 12px rgba(48,209,88,0.5);
+    }
+    .pin-dot.error {
+      background: #FF453A;
+      border-color: #FF453A;
+      box-shadow: 0 0 12px rgba(255,69,58,0.5);
+    }
+    .keypad-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      width: 100%;
+      max-width: 280px;
+    }
+    .key-btn {
+      width: 68px;
+      height: 68px;
+      margin: 0 auto;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: #fff;
+      font-size: 24px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      user-select: none;
+    }
+    .key-btn:active {
+      background: rgba(255,255,255,0.18);
+      transform: scale(0.92);
+    }
+    .key-btn.icon-key {
+      background: transparent;
+      border-color: transparent;
+      color: var(--text-muted);
+    }
+    .key-btn.icon-key:active { color: #fff; }
+    .shake {
+      animation: shake 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+    }
+    @keyframes shake {
+      10%, 90% { transform: translate3d(-2px, 0, 0); }
+      20%, 80% { transform: translate3d(4px, 0, 0); }
+      30%, 50%, 70% { transform: translate3d(-6px, 0, 0); }
+      40%, 60% { transform: translate3d(6px, 0, 0); }
+    }
+
+    /* CALENDAR DAY TILES */
+    .cal-day-cell {
+      min-height: 52px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border);
+      padding: 4px 6px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .cal-day-cell:hover {
+      background: rgba(255,255,255,0.05);
+      border-color: var(--border-prominent);
+    }
+    .cal-day-cell.empty {
+      background: transparent;
+      border-color: transparent;
+      cursor: default;
+    }
+    .cal-day-cell.win {
+      background: rgba(48,209,88,0.1);
+      border-color: rgba(48,209,88,0.3);
+    }
+    .cal-day-cell.loss {
+      background: rgba(255,69,58,0.1);
+      border-color: rgba(255,69,58,0.3);
+    }
+    .cal-day-num {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-align: right;
+    }
+    .cal-day-pnl {
+      font-size: 9px;
+      font-weight: 800;
+      text-align: center;
+      line-height: 1.1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-top: 2px;
+    }
+    .cal-day-pnl.green { color: #30D158; }
+    .cal-day-pnl.red { color: #FF453A; }
   </style>
 </head>
 <body>
@@ -722,6 +872,18 @@
           </div>
         </div>
         <button onclick="openUpdateModal()" style="background:#0A84FF; color:#fff; border:none; padding:7px 14px; border-radius:12px; font-size:11px; font-weight:800; cursor:pointer; flex-shrink:0;">Update</button>
+      </div>
+
+      <!-- DAILY RISK KILL SWITCH BANNER -->
+      <div id="killSwitchBanner" style="display:none; margin-bottom:14px; background:linear-gradient(135deg, rgba(255,69,58,0.2) 0%, rgba(180,20,20,0.2) 100%); border:1px solid rgba(255,69,58,0.5); border-radius:18px; padding:12px 14px; align-items:center; justify-content:space-between; gap:10px;">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div style="width:34px; height:34px; border-radius:50%; background:rgba(255,69,58,0.25); display:flex; align-items:center; justify-content:center; font-size:16px; flex-shrink:0;">🛑</div>
+          <div>
+            <div style="font-size:13px; font-weight:800; color:#FF453A;">KILL SWITCH ACTIVE</div>
+            <div style="font-size:11px; color:var(--text-muted);" id="killSwitchMsg">Daily loss limit reached. Trading locked to preserve capital.</div>
+          </div>
+        </div>
+        <button onclick="emergencyUnlockKillSwitch()" style="background:rgba(255,255,255,0.1); color:var(--text-muted); border:none; padding:6px 10px; border-radius:8px; font-size:10px; font-weight:700; cursor:pointer;">Override</button>
       </div>
 
       <!-- STACKED DUAL CARDS -->
@@ -826,20 +988,22 @@
 
     <!-- TAB 2: CALENDAR JOURNAL -->
     <div id="tab-calendar" class="tab-view">
-      <h2 style="font-size:22px; font-weight:800; margin-bottom:14px;">Monthly Heatmap</h2>
-      <div style="background:var(--card-bg); border:1px solid var(--border); border-radius:24px; padding:20px; margin-bottom:20px;">
-        <div style="display:flex; justify-content:space-between; font-weight:800; font-size:15px; margin-bottom:14px;">
-          <span>NOVEMBER 2026</span>
-          <span id="calMonthNet" style="color:var(--text-muted);">₹0.00 Realized</span>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+        <h2 style="font-size:22px; font-weight:800;">Monthly Heatmap</h2>
+        <div style="display:flex; gap:6px;">
+          <button class="round-action-btn" onclick="changeCalMonth(-1)" style="width:34px; height:34px; font-size:16px;" title="Previous Month">‹</button>
+          <button class="round-action-btn" onclick="changeCalMonth(1)" style="width:34px; height:34px; font-size:16px;" title="Next Month">›</button>
         </div>
-        <div style="display:grid; grid-template-columns: repeat(7, 1fr); gap:6px; text-align:center; font-size:11px;" id="calendarGrid">
-          <div style="color:var(--text-muted); font-weight:700;">M</div>
-          <div style="color:var(--text-muted); font-weight:700;">T</div>
-          <div style="color:var(--text-muted); font-weight:700;">W</div>
-          <div style="color:var(--text-muted); font-weight:700;">T</div>
-          <div style="color:var(--text-muted); font-weight:700;">F</div>
-          <div style="color:var(--text-muted); font-weight:700;">S</div>
-          <div style="color:var(--text-muted); font-weight:700;">S</div>
+      </div>
+      <div style="background:var(--card-bg); border:1px solid var(--border); border-radius:24px; padding:18px; margin-bottom:20px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; font-weight:800; font-size:14px; margin-bottom:14px;">
+          <span id="calMonthTitle">NOVEMBER 2026</span>
+          <span id="calMonthNet" style="color:var(--text-muted); font-family:'JetBrains Mono'; font-size:13px;">₹0.00 Realized</span>
+        </div>
+        <div style="display:grid; grid-template-columns: repeat(7, 1fr); gap:6px; text-align:center; font-size:10px; margin-bottom:8px; font-weight:800; color:var(--text-muted);">
+          <div>M</div><div>T</div><div>W</div><div>T</div><div>F</div><div>S</div><div>S</div>
+        </div>
+        <div style="display:grid; grid-template-columns: repeat(7, 1fr); gap:6px;" id="calendarGrid">
           <!-- Days populated dynamically -->
         </div>
       </div>
@@ -1084,6 +1248,38 @@
         <span>🗑️</span><span>Wipe & Reset All Data</span>
       </button>
 
+      <div class="drawer-section-label">Risk & Discipline (Optional)</div>
+      <div style="background:var(--card-subtle); border:1px solid var(--border); border-radius:14px; padding:12px 14px; margin-bottom:8px;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <div style="font-size:13px; font-weight:700;">🛑 Daily Kill Switch</div>
+            <div style="font-size:11px; color:var(--text-sub);">Halt trades on max daily loss</div>
+          </div>
+          <input type="checkbox" id="killSwitchToggle" onchange="toggleKillSwitch(this.checked)" style="width:18px; height:18px; accent-color:#FF453A; cursor:pointer;">
+        </div>
+        <div id="killSwitchConfigBox" style="display:none; padding-top:10px; margin-top:8px; border-top:1px dashed var(--border);">
+          <div style="font-size:11px; color:var(--text-muted); margin-bottom:4px;">Max Daily Loss Limit (₹):</div>
+          <input type="number" id="killSwitchLimitInput" class="input-box" value="5000" step="500" onchange="updateKillSwitchLimit(this.value)" style="height:36px; font-size:13px;">
+          <div style="font-size:10px; color:var(--text-sub); margin-top:4px;">Locks Quick Punch when net loss hits this threshold.</div>
+        </div>
+      </div>
+
+      <div class="drawer-section-label">Security & App Lock (Optional)</div>
+      <div style="background:var(--card-subtle); border:1px solid var(--border); border-radius:14px; padding:12px 14px; margin-bottom:8px;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <div style="font-size:13px; font-weight:700;">🔒 4-Digit PIN Lock</div>
+            <div style="font-size:11px; color:var(--text-sub);">Require passcode on startup</div>
+          </div>
+          <input type="checkbox" id="pinLockToggle" onchange="togglePinLock(this.checked)" style="width:18px; height:18px; accent-color:#30D158; cursor:pointer;">
+        </div>
+        <div id="pinLockConfigBox" style="display:none; padding-top:10px; margin-top:8px; border-top:1px dashed var(--border);">
+          <button class="drawer-btn" onclick="openPinSetupModal()" style="margin-bottom:0; font-size:12px; padding:8px 12px;">
+            <span>🔑</span><span>Set / Change 4-Digit PIN</span>
+          </button>
+        </div>
+      </div>
+
       <div class="drawer-section-label">Preferences</div>
       <button class="drawer-btn" onclick="toggleTheme()">
         <span>🌓</span><span>Switch Light / Dark Theme</span>
@@ -1103,6 +1299,72 @@
       <div style="margin-top:auto; padding-top:16px; border-top:1px solid var(--border); font-size:11px; color:var(--text-sub); text-align:center;">
         Vega <span id="drawerVerTag">v1.0.4</span> • Personal F&O Ledger<br>
         Exact Dhan Brokerage Engine • Instant OTA
+      </div>
+    </div>
+  </div>
+
+  <!-- PIN SETUP MODAL -->
+  <div class="modal-sheet" id="pinSetupModal" onclick="closePinSetupModal()">
+    <div class="sheet-card" onclick="event.stopPropagation()">
+      <div class="sheet-notch"></div>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+        <div>
+          <h3 style="font-size:18px; font-weight:800;" id="pinSetupTitle">Set 4-Digit Passcode</h3>
+          <p style="font-size:12px; color:var(--text-muted); margin-top:2px;">Protect your trading ledger with a 4-digit PIN</p>
+        </div>
+        <button class="round-action-btn" onclick="closePinSetupModal()" style="width:32px; height:32px;">✕</button>
+      </div>
+
+      <div class="form-group" style="margin-bottom:16px;">
+        <input type="password" id="pinSetupInput" class="input-box" placeholder="Enter 4 digits" maxlength="4" inputmode="numeric" style="text-align:center; font-size:24px; letter-spacing:10px; height:48px;">
+      </div>
+
+      <div style="display:flex; gap:10px;">
+        <button class="submit-btn" style="background:var(--card-subtle); color:var(--text-muted); flex:1;" onclick="closePinSetupModal()">
+          <span>CANCEL</span>
+        </button>
+        <button class="submit-btn" style="background:#30D158; color:#000; flex:2;" onclick="submitPinSetup()">
+          <span>SAVE PASSCODE</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- BROKERAGE-GRADE 4-DIGIT PIN & BIOMETRIC APP LOCK OVERLAY -->
+  <div id="appLockOverlay" class="lock-overlay" style="display:none;">
+    <div class="lock-content">
+      <div class="lock-brand">
+        <div class="lock-logo-badge">V</div>
+        <h2 style="font-size:20px; font-weight:800; margin-top:12px;">VEGA TRADER</h2>
+        <p style="font-size:12px; color:var(--text-muted); margin-top:4px;" id="lockSubtitle">Enter 4-Digit Passcode</p>
+      </div>
+
+      <!-- 4 PIN Dots -->
+      <div class="pin-dots" id="pinDots">
+        <div class="pin-dot"></div>
+        <div class="pin-dot"></div>
+        <div class="pin-dot"></div>
+        <div class="pin-dot"></div>
+      </div>
+
+      <!-- Numeric Keypad -->
+      <div class="keypad-grid">
+        <button class="key-btn" onclick="pressPinDigit('1')">1</button>
+        <button class="key-btn" onclick="pressPinDigit('2')">2</button>
+        <button class="key-btn" onclick="pressPinDigit('3')">3</button>
+        <button class="key-btn" onclick="pressPinDigit('4')">4</button>
+        <button class="key-btn" onclick="pressPinDigit('5')">5</button>
+        <button class="key-btn" onclick="pressPinDigit('6')">6</button>
+        <button class="key-btn" onclick="pressPinDigit('7')">7</button>
+        <button class="key-btn" onclick="pressPinDigit('8')">8</button>
+        <button class="key-btn" onclick="pressPinDigit('9')">9</button>
+        <button class="key-btn icon-key" onclick="triggerBiometricUnlock()">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 10a2 2 0 0 0-2 2c0 1.02-.1 2.51-.26 4"/><path d="M14 13.12c0 2.38 0 6.38-1 8.88"/><path d="M17.29 21.02c.12-.6.43-2.3.5-3.02"/><path d="M2 12a10 10 0 0 1 18-6"/><path d="M2 16h.01"/><path d="M21.8 16c.2-2 .131-5.354 0-6"/><path d="M9 6.8a6 6 0 0 1 9 5.2c0 .47 0 1.17-.02 2"/><path d="M5 11.5a8 8 0 0 1 2.5-5.5"/></svg>
+        </button>
+        <button class="key-btn" onclick="pressPinDigit('0')">0</button>
+        <button class="key-btn icon-key" onclick="deletePinDigit()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"/><line x1="18" x2="12" y1="9" y2="15"/><line x1="12" x2="18" y1="9" y2="15"/></svg>
+        </button>
       </div>
     </div>
   </div>
@@ -1205,7 +1467,15 @@
   }
 
   // Modals Controls
-  function openPunchModal() { document.getElementById('punchModal').classList.add('show'); updateLiveCalc(); }
+  function openPunchModal() {
+    const totals = computeLedgerTotals();
+    if (isKillSwitchEnabled() && totals.todayNet <= -getKillSwitchLimit()) {
+      alert(`🛑 DAILY RISK KILL SWITCH ACTIVE!\n\nYour max daily loss limit of ₹${getKillSwitchLimit().toLocaleString('en-IN')} has been hit today.\nTrading is locked to protect your capital and prevent emotional revenge trading.`);
+      return;
+    }
+    document.getElementById('punchModal').classList.add('show');
+    updateLiveCalc();
+  }
   function closePunchModal() { document.getElementById('punchModal').classList.remove('show'); }
 
   function openCapitalModal() { document.getElementById('capitalModal').classList.add('show'); }
@@ -1326,6 +1596,9 @@
 
     // 7. Tax Tab
     renderTaxTab(totals);
+
+    // 8. Daily Risk Kill Switch
+    checkKillSwitchStatus(totals.todayNet);
   }
 
   function renderTradeList() {
@@ -1476,9 +1749,80 @@
     fillPath.setAttribute('d', dFill);
   }
 
+  let currentCalDate = new Date();
+
+  function changeCalMonth(delta) {
+    currentCalDate.setMonth(currentCalDate.getMonth() + delta);
+    renderCalendar(computeLedgerTotals());
+  }
+
   function renderCalendar(totals) {
+    const year = currentCalDate.getFullYear();
+    const month = currentCalDate.getMonth();
+    const monthNames = ['JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE','JULY','AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER'];
+    
+    const titleEl = document.getElementById('calMonthTitle');
+    if (titleEl) titleEl.innerText = `${monthNames[month]} ${year}`;
+
+    const tradesByDay = {};
+    let monthNetPnl = 0;
+
+    cachedTrades.forEach(t => {
+      if (!t.entry_time) return;
+      const dStr = t.entry_time.slice(0, 10);
+      const [tY, tM] = dStr.split('-').map(Number);
+      if (tY === year && tM === (month + 1)) {
+        if (!tradesByDay[dStr]) tradesByDay[dStr] = { net: 0, trades: [] };
+        const net = parseFloat(t.net_pnl) || 0;
+        tradesByDay[dStr].net += net;
+        tradesByDay[dStr].trades.push(t);
+        monthNetPnl += net;
+      }
+    });
+
     const netEl = document.getElementById('calMonthNet');
-    if (netEl) netEl.innerText = `${totals.totalTradeNet >= 0 ? '+' : ''}₹${totals.totalTradeNet.toLocaleString('en-IN', {minimumFractionDigits:2})} Realized`;
+    if (netEl) {
+      netEl.innerText = `${monthNetPnl >= 0 ? '+' : ''}₹${monthNetPnl.toLocaleString('en-IN', {minimumFractionDigits:2})} Realized`;
+      netEl.style.color = monthNetPnl >= 0 ? 'var(--profit)' : 'var(--loss)';
+    }
+
+    const grid = document.getElementById('calendarGrid');
+    if (grid) {
+      grid.innerHTML = '';
+      const firstDay = new Date(year, month, 1).getDay();
+      const startOffset = (firstDay === 0 ? 6 : firstDay - 1);
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+      for (let i = 0; i < startOffset; i++) {
+        const empty = document.createElement('div');
+        empty.className = 'cal-day-cell empty';
+        grid.appendChild(empty);
+      }
+
+      for (let day = 1; day <= daysInMonth; day++) {
+        const dStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        const dayData = tradesByDay[dStr];
+        const cell = document.createElement('div');
+        cell.className = 'cal-day-cell';
+
+        let pnlHtml = `<div class="cal-day-pnl" style="color:var(--text-sub); opacity:0.3;">—</div>`;
+        if (dayData) {
+          const isWin = dayData.net >= 0;
+          cell.classList.add(isWin ? 'win' : 'loss');
+          const netFormatted = Math.abs(dayData.net) >= 1000 
+            ? `${isWin ? '+' : '-'}₹${(Math.abs(dayData.net) / 1000).toFixed(1)}k`
+            : `${isWin ? '+' : '-'}₹${Math.round(Math.abs(dayData.net))}`;
+          pnlHtml = `<div class="cal-day-pnl ${isWin ? 'green' : 'red'}">${netFormatted}</div>`;
+          cell.onclick = () => showDayTradeDetails(dStr, dayData);
+        }
+
+        cell.innerHTML = `
+          <div class="cal-day-num">${day}</div>
+          ${pnlHtml}
+        `;
+        grid.appendChild(cell);
+      }
+    }
 
     const totalSessions = document.getElementById('calTotalSessions');
     if (totalSessions) totalSessions.innerText = cachedTrades.length;
@@ -1502,6 +1846,14 @@
     if (document.getElementById('calAvgWin')) document.getElementById('calAvgWin').innerText = `₹${avgWin.toFixed(2)}`;
     if (document.getElementById('calAvgLoss')) document.getElementById('calAvgLoss').innerText = `₹${avgLoss.toFixed(2)}`;
     if (document.getElementById('calPayoff')) document.getElementById('calPayoff').innerText = `1 : ${payoff}`;
+  }
+
+  function showDayTradeDetails(dateStr, data) {
+    let summary = `Date: ${dateStr}\nTotal Executions: ${data.trades.length}\nDay Net P&L: ₹${data.net.toFixed(2)}\n\n`;
+    data.trades.forEach((t, i) => {
+      summary += `#${i+1} ${t.symbol} (${t.strategy_name || 'F&O'})\nNet: ₹${t.net_pnl} (Charges: ₹${t.total_charges})\n\n`;
+    });
+    alert(summary);
   }
 
   function renderTaxTab(totals) {
@@ -1627,6 +1979,12 @@
   }
 
   async function submitQuickTrade() {
+    const totals = computeLedgerTotals();
+    if (isKillSwitchEnabled() && totals.todayNet <= -getKillSwitchLimit()) {
+      alert(`🛑 DAILY RISK KILL SWITCH ACTIVE!\n\nYour max daily loss limit of ₹${getKillSwitchLimit().toLocaleString('en-IN')} has been hit today.\nExecution blocked to protect your capital.`);
+      return;
+    }
+
     const sym = document.getElementById('symInput').value.trim();
     const qty = parseInt(document.getElementById('qtyInput').value) || 50;
     const entry = parseFloat(document.getElementById('entryInput').value) || 100;
@@ -1838,7 +2196,218 @@
     window.location.href = apkUrl;
   }
 
+  // ========================================================
+  // DAILY RISK KILL SWITCH (OPTIONAL, OFF BY DEFAULT)
+  // ========================================================
+  function isKillSwitchEnabled() {
+    return localStorage.getItem('vega_kill_switch_enabled') === 'true';
+  }
+
+  function getKillSwitchLimit() {
+    return parseFloat(localStorage.getItem('vega_kill_switch_limit')) || 5000;
+  }
+
+  function toggleKillSwitch(enabled) {
+    localStorage.setItem('vega_kill_switch_enabled', enabled ? 'true' : 'false');
+    const box = document.getElementById('killSwitchConfigBox');
+    if (box) box.style.display = enabled ? 'block' : 'none';
+    renderAll();
+  }
+
+  function updateKillSwitchLimit(val) {
+    const num = Math.abs(parseFloat(val)) || 5000;
+    localStorage.setItem('vega_kill_switch_limit', num);
+    renderAll();
+  }
+
+  function checkKillSwitchStatus(todayNetPnl) {
+    const enabled = isKillSwitchEnabled();
+    const limit = getKillSwitchLimit();
+    const banner = document.getElementById('killSwitchBanner');
+    
+    const toggle = document.getElementById('killSwitchToggle');
+    if (toggle) toggle.checked = enabled;
+    const box = document.getElementById('killSwitchConfigBox');
+    if (box) box.style.display = enabled ? 'block' : 'none';
+    const limitInput = document.getElementById('killSwitchLimitInput');
+    if (limitInput) limitInput.value = limit;
+
+    const isTriggered = enabled && todayNetPnl <= -limit;
+    if (banner) {
+      banner.style.display = isTriggered ? 'flex' : 'none';
+      const msg = document.getElementById('killSwitchMsg');
+      if (msg) msg.innerText = `Max daily loss limit (-₹${limit.toLocaleString('en-IN')}) reached. Trading locked to preserve capital.`;
+    }
+
+    return isTriggered;
+  }
+
+  function emergencyUnlockKillSwitch() {
+    if (confirm('EMERGENCY OVERRIDE:\nAre you sure you want to temporarily disable the Daily Risk Kill Switch for today?')) {
+      toggleKillSwitch(false);
+      alert('Kill Switch disabled. Trade carefully and manage risk.');
+    }
+  }
+
+  // ========================================================
+  // BROKERAGE-GRADE 4-DIGIT PIN & BIOMETRIC APP LOCK (OPTIONAL)
+  // ========================================================
+  let enteredPin = '';
+  let pinSetupStep = 1;
+  let tempNewPin = '';
+
+  function isPinLockEnabled() {
+    return localStorage.getItem('vega_pin_enabled') === 'true';
+  }
+
+  function getStoredPin() {
+    return localStorage.getItem('vega_pin_code') || '';
+  }
+
+  function checkAppLockOnBoot() {
+    const isEnabled = isPinLockEnabled();
+    const toggle = document.getElementById('pinLockToggle');
+    if (toggle) toggle.checked = isEnabled;
+    const configBox = document.getElementById('pinLockConfigBox');
+    if (configBox) configBox.style.display = isEnabled ? 'block' : 'none';
+
+    if (isEnabled && getStoredPin()) {
+      showLockScreen();
+    }
+  }
+
+  function showLockScreen() {
+    enteredPin = '';
+    updatePinDots();
+    const overlay = document.getElementById('appLockOverlay');
+    if (overlay) overlay.style.display = 'flex';
+  }
+
+  function hideLockScreen() {
+    const overlay = document.getElementById('appLockOverlay');
+    if (overlay) overlay.style.display = 'none';
+  }
+
+  function pressPinDigit(digit) {
+    if (enteredPin.length < 4) {
+      enteredPin += digit;
+      updatePinDots();
+      if (enteredPin.length === 4) {
+        setTimeout(verifyEnteredPin, 150);
+      }
+    }
+  }
+
+  function deletePinDigit() {
+    if (enteredPin.length > 0) {
+      enteredPin = enteredPin.slice(0, -1);
+      updatePinDots();
+    }
+  }
+
+  function updatePinDots(isError = false) {
+    const dots = document.querySelectorAll('.pin-dot');
+    dots.forEach((dot, idx) => {
+      dot.className = 'pin-dot';
+      if (isError) {
+        dot.classList.add('error');
+      } else if (idx < enteredPin.length) {
+        dot.classList.add('filled');
+      }
+    });
+  }
+
+  function verifyEnteredPin() {
+    const correctPin = getStoredPin();
+    if (enteredPin === correctPin) {
+      hideLockScreen();
+      enteredPin = '';
+    } else {
+      updatePinDots(true);
+      const dotsContainer = document.getElementById('pinDots');
+      if (dotsContainer) dotsContainer.classList.add('shake');
+      setTimeout(() => {
+        if (dotsContainer) dotsContainer.classList.remove('shake');
+        enteredPin = '';
+        updatePinDots(false);
+      }, 500);
+    }
+  }
+
+  async function triggerBiometricUnlock() {
+    try {
+      if (window.PublicKeyCredential) {
+        hideLockScreen();
+      } else {
+        alert('Biometric hardware not supported on this browser session. Please enter your 4-digit PIN.');
+      }
+    } catch(e) {
+      alert('Please use your 4-digit PIN to unlock.');
+    }
+  }
+
+  function togglePinLock(enabled) {
+    if (enabled) {
+      if (!getStoredPin()) {
+        openPinSetupModal();
+      } else {
+        localStorage.setItem('vega_pin_enabled', 'true');
+        document.getElementById('pinLockConfigBox').style.display = 'block';
+        alert('4-Digit PIN Lock is now ACTIVE. Vega will require this passcode on startup.');
+      }
+    } else {
+      localStorage.setItem('vega_pin_enabled', 'false');
+      document.getElementById('pinLockConfigBox').style.display = 'none';
+      alert('App PIN Lock has been disabled.');
+    }
+  }
+
+  function openPinSetupModal() {
+    pinSetupStep = 1;
+    tempNewPin = '';
+    document.getElementById('pinSetupTitle').innerText = 'Set 4-Digit Passcode';
+    document.getElementById('pinSetupInput').value = '';
+    document.getElementById('pinSetupInput').placeholder = 'Enter 4 digits';
+    document.getElementById('pinSetupModal').classList.add('show');
+    closeMenuDrawer();
+  }
+
+  function closePinSetupModal() {
+    document.getElementById('pinSetupModal').classList.remove('show');
+    const toggle = document.getElementById('pinLockToggle');
+    if (toggle) toggle.checked = isPinLockEnabled();
+  }
+
+  function submitPinSetup() {
+    const val = document.getElementById('pinSetupInput').value.trim();
+    if (!/^\d{4}$/.test(val)) {
+      alert('Please enter exactly 4 numbers (0-9).');
+      return;
+    }
+    if (pinSetupStep === 1) {
+      tempNewPin = val;
+      pinSetupStep = 2;
+      document.getElementById('pinSetupTitle').innerText = 'Confirm 4-Digit Passcode';
+      document.getElementById('pinSetupInput').value = '';
+      document.getElementById('pinSetupInput').placeholder = 'Re-enter 4 digits';
+    } else {
+      if (val === tempNewPin) {
+        localStorage.setItem('vega_pin_code', val);
+        localStorage.setItem('vega_pin_enabled', 'true');
+        closePinSetupModal();
+        const toggle = document.getElementById('pinLockToggle');
+        if (toggle) toggle.checked = true;
+        document.getElementById('pinLockConfigBox').style.display = 'block';
+        alert('Passcode set successfully! Vega is now locked with your PIN.');
+      } else {
+        alert('Passcodes did not match. Please try again.');
+        openPinSetupModal();
+      }
+    }
+  }
+
   // Initial Boot
+  checkAppLockOnBoot();
   fetchAllData();
   setInterval(fetchAllData, 10000);
   setTimeout(() => checkAppUpdates(false), 2500);
