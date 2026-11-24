@@ -142,10 +142,16 @@ public class MainActivity extends Activity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             try {
                 BiometricPrompt biometricPrompt = new BiometricPrompt.Builder(this)
-                    .setTitle("Unlock Vega")
-                    .setSubtitle("Biometric Authentication")
-                    .setDescription("Touch the fingerprint sensor to unlock Vega Trader")
-                    .setNegativeButton("Use 4-Digit PIN", command -> new Handler(Looper.getMainLooper()).post(command), (dialog, which) -> {})
+                    .setTitle("Vega Trader")
+                    .setSubtitle("Biometric Authentication Required")
+                    .setDescription("Touch fingerprint sensor to access institutional ledger")
+                    .setNegativeButton("Use 4-Digit PIN", command -> new Handler(Looper.getMainLooper()).post(command), (dialog, which) -> {
+                        runOnUiThread(() -> {
+                            if (mWebView != null) {
+                                mWebView.evaluateJavascript("if (typeof onBiometricFallbackPin === 'function') onBiometricFallbackPin();", null);
+                            }
+                        });
+                    })
                     .build();
 
                 CancellationSignal signal = new CancellationSignal();
@@ -173,6 +179,11 @@ public class MainActivity extends Activity {
                     @Override
                     public void onAuthenticationError(int errorCode, CharSequence errString) {
                         super.onAuthenticationError(errorCode, errString);
+                        runOnUiThread(() -> {
+                            if (mWebView != null) {
+                                mWebView.evaluateJavascript("if (typeof onBiometricError === 'function') onBiometricError(" + errorCode + ");", null);
+                            }
+                        });
                     }
                 });
             } catch (Exception ignored) {}
@@ -191,7 +202,10 @@ public class MainActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (mWebView != null) mWebView.onResume();
+        if (mWebView != null) {
+            mWebView.onResume();
+            mWebView.evaluateJavascript("if (typeof onAppResumeSecurityCheck === 'function') onAppResumeSecurityCheck();", null);
+        }
     }
 
     @Override
