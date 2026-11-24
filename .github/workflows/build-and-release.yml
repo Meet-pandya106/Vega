@@ -3,9 +3,10 @@ name: Vega CI/CD Build & Release
 on:
   push:
     branches: [ main ]
-    tags:
-      - 'v*'
-  workflow_dispatch: # Allows manual trigger from GitHub UI
+  workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   build-apk:
@@ -22,15 +23,9 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: 🤖 Set up Android SDK
-        uses: android-actions/setup-android@v3
-
-      - name: 📦 Install Android Build Tools & Platform
-        run: |
-          sdkmanager "platforms;android-34" "build-tools;34.0.0"
-
       - name: 🚀 Build Standalone APK
         run: |
+          export ANDROID_HOME="/usr/local/lib/android/sdk"
           BUILD_TOOLS="$ANDROID_HOME/build-tools/34.0.0"
           PLATFORM_JAR="$ANDROID_HOME/platforms/android-34/android.jar"
           PROJ_DIR="android_native"
@@ -87,21 +82,20 @@ jobs:
           name: Vega-Android-APK
           path: Vega.apk
 
-      - name: 🏷️ Create GitHub Release (On Push or Tag)
-        if: startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/main'
+      - name: 🏷️ Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          name: Vega Release ${{ github.ref_name }}
-          tag_name: ${{ github.ref_name }}
+          name: Vega Build v1.0.${{ github.run_number }}
+          tag_name: v1.0.${{ github.run_number }}
           files: Vega.apk
           body: |
-            ### 🚀 Vega Institutional F&O Ledger
-            Automated build for Meet Pandya.
+            ### 🚀 Vega Institutional F&O Ledger (Build v1.0.${{ github.run_number }})
+            Automated CI/CD build for Meet Pandya.
             
-            - **Cloud Sync:** Supabase PostgreSQL (AWS Mumbai)
-            - **Broker Integration:** DhanHQ API v2
-            - **Features:** Dual-card neo-banking ledger, scrubbable equity curve, exact Dhan fee breakdown.
+            - **Cloud Sync:** Supabase PostgreSQL (AWS Mumbai `ap-south-1`)
+            - **Broker Integration:** DhanHQ API v2 (Client ID `1109849315`)
+            - **Live Feed:** Native socket bridge bypassing CORS
             
-            **Installation:** Download `Vega.apk` directly to your Android device and tap to install!
+            **Installation:** Download `Vega.apk` below directly to your Android device and tap to install!
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
