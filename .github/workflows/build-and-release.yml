@@ -14,16 +14,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 📥 Checkout Repository
+      - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: ☕ Set up JDK 17
+      - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: 🚀 Build Standalone APK
+      - name: Build Standalone APK
         run: |
           export ANDROID_HOME="/usr/local/lib/android/sdk"
           BUILD_TOOLS="$ANDROID_HOME/build-tools/34.0.0"
@@ -73,31 +73,33 @@ jobs:
           cd ../../..
           cp $OUT_DIR/Vega.apk ./Vega.apk
 
-      - name: 📤 Upload APK Artifact
+      - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: Vega-Android-APK
           path: Vega.apk
 
-      - name: 🏷️ Create GitHub Release
+      - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           name: Vega Build v1.0.${{ github.run_number }}
           tag_name: v1.0.${{ github.run_number }}
           files: Vega.apk
           body: |
-            ### 🚀 Vega Institutional F&O Ledger (Build v1.0.${{ github.run_number }})
-            Automated CI/CD build for Meet Pandya.
+            ### Vega Institutional Terminal (v1.0.${{ github.run_number }})
+            High-frequency quantitative trading journal & risk analytics suite for Meet Pandya.
             
-            - **Cloud Sync:** Supabase PostgreSQL (AWS Mumbai `ap-south-1`)
-            - **Broker Integration:** DhanHQ API v2 (Client ID `1109849315`)
-            - **Live Feed:** Native socket bridge bypassing CORS
+            - **Quantitative Engine:** Profit Factor, Expectancy, Max Drawdown, Fee Drag Ratio
+            - **Zero Emoji Suite:** Clean SVG Lucide iconography & neo-banking dark aesthetic
+            - **Cloud Infrastructure:** Supabase PostgreSQL (AWS Mumbai `ap-south-1`)
+            - **Direct Broker Route:** DhanHQ API v2 (Client ID `1109849315`)
+            - **Biometric Security:** Hardware fingerprint verification & native download bridge
             
-            **Installation:** Download `Vega.apk` below directly to your Android device and tap to install!
+            **Direct Installation:** Download `Vega.apk` below directly to your device and tap to install.
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: 🌐 Deploy Live Web App to GitHub Pages
+      - name: Deploy Live Web App to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
