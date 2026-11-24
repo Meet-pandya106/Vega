@@ -4,13 +4,19 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.hardware.biometrics.BiometricPrompt;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.CancellationSignal;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.DownloadListener;
+import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
@@ -113,8 +119,64 @@ public class MainActivity extends Activity {
             }
         });
 
+        // Register Native JavaScript Bridge for Fingerprint / Biometrics
+        mWebView.addJavascriptInterface(new VegaNativeBridge(), "VegaNative");
+
         setContentView(mWebView);
         mWebView.loadUrl("file:///android_asset/index.html");
+    }
+
+    public class VegaNativeBridge {
+        @JavascriptInterface
+        public void requestBiometricUnlock() {
+            runOnUiThread(() -> showBiometricPrompt());
+        }
+
+        @JavascriptInterface
+        public boolean hasBiometricSupport() {
+            return Build.VERSION.SDK_INT >= Build.VERSION_CODES.P;
+        }
+    }
+
+    private void showBiometricPrompt() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            try {
+                BiometricPrompt biometricPrompt = new BiometricPrompt.Builder(this)
+                    .setTitle("Unlock Vega")
+                    .setSubtitle("Biometric Authentication")
+                    .setDescription("Touch the fingerprint sensor to unlock Vega Trader")
+                    .setNegativeButton("Use 4-Digit PIN", command -> new Handler(Looper.getMainLooper()).post(command), (dialog, which) -> {})
+                    .build();
+
+                CancellationSignal signal = new CancellationSignal();
+                biometricPrompt.authenticate(signal, command -> new Handler(Looper.getMainLooper()).post(command), new BiometricPrompt.AuthenticationCallback() {
+                    @Override
+                    public void onAuthenticationSucceeded(BiometricPrompt.AuthenticationResult result) {
+                        super.onAuthenticationSucceeded(result);
+                        runOnUiThread(() -> {
+                            if (mWebView != null) {
+                                mWebView.evaluateJavascript("if (typeof onBiometricSuccess === 'function') onBiometricSuccess();", null);
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onAuthenticationFailed() {
+                        super.onAuthenticationFailed();
+                        runOnUiThread(() -> {
+                            if (mWebView != null) {
+                                mWebView.evaluateJavascript("if (typeof onBiometricFailed === 'function') onBiometricFailed();", null);
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onAuthenticationError(int errorCode, CharSequence errString) {
+                        super.onAuthenticationError(errorCode, errString);
+                    }
+                });
+            } catch (Exception ignored) {}
+        }
     }
 
     @Override
