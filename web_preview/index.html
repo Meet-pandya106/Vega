@@ -13,10 +13,9 @@
   <link rel="icon" type="image/png" href="icon-192.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      /* Dark Mode Palette (Exact to Right Phone Mockup) */
       --bg: #000000;
       --card-bg: #121214;
       --card-subtle: #1C1C1E;
@@ -33,11 +32,8 @@
 
       --profit: #30D158;
       --profit-glow: rgba(48, 209, 88, 0.25);
-      --profit-surface: rgba(48, 209, 88, 0.10);
-
       --loss: #FF453A;
       --loss-glow: rgba(255, 69, 58, 0.25);
-      --loss-surface: rgba(255, 69, 58, 0.10);
 
       --dock-bg: #161618;
       --accent-pill: #FFFFFF;
@@ -45,7 +41,6 @@
     }
 
     body.light-mode {
-      /* Light Mode Palette (Exact to Left Phone Mockup) */
       --bg: #F4F5F7;
       --card-bg: #FFFFFF;
       --card-subtle: #F0F1F5;
@@ -80,7 +75,6 @@
       transition: background 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    /* Outer Chassis (Desktop Frame) */
     .phone-container {
       width: 100%;
       max-width: 410px;
@@ -108,7 +102,6 @@
       .island-bar { display: none !important; }
     }
 
-    /* Island Bar */
     .island-bar {
       padding-top: 12px;
       padding-bottom: 6px;
@@ -131,7 +124,6 @@
     .island-lens { width: 9px; height: 9px; border-radius: 50%; background: #1C1C1E; border: 1px solid #2C2C2E; }
     .island-sensor { width: 36px; height: 3px; background: #1C1C1E; border-radius: 2px; }
 
-    /* App Header Bar */
     .header-bar {
       padding: 12px 24px 8px 24px;
       display: flex;
@@ -161,44 +153,6 @@
       align-items: center;
       gap: 10px;
     }
-    .dhan-sync-pill {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      padding: 7px 14px;
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      color: var(--text-main);
-      font-size: 12px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .dhan-sync-pill:hover { border-color: #30D158; }
-    .dhan-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #30D158;
-      box-shadow: 0 0 8px #30D158;
-      animation: pulseDot 2s infinite;
-    }
-    @keyframes pulseDot {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(0.85); }
-    }
-    .delete-trade-btn {
-      background: rgba(255, 69, 58, 0.12);
-      border: 1px solid rgba(255, 69, 58, 0.25);
-      color: #FF453A;
-      border-radius: 8px;
-      padding: 4px 10px;
-      font-size: 11px;
-      font-weight: 700;
-      cursor: pointer;
-      margin-top: 8px;
-    }
     .user-avatar {
       width: 44px;
       height: 44px;
@@ -215,7 +169,6 @@
       user-select: none;
     }
 
-    /* Scroll Viewport */
     .viewport {
       flex: 1;
       overflow-y: auto;
@@ -232,7 +185,6 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Greeting */
     .greeting-section { margin-bottom: 20px; }
     .greeting-title {
       font-size: 26px;
@@ -248,9 +200,7 @@
       font-weight: 500;
     }
 
-    /* ========================================================
-       STACKED DUAL CARDS (EXACT TO MOCKUP)
-       ======================================================== */
+    /* Stacked Cards */
     .card-stack-container {
       position: relative;
       margin-bottom: 24px;
@@ -280,9 +230,8 @@
     }
     .back-card-number {
       font-family: 'JetBrains Mono', monospace;
-      font-weight: 700;
-      font-size: 13px;
-      letter-spacing: 1px;
+      font-weight: 800;
+      font-size: 14px;
     }
 
     .front-card {
@@ -293,92 +242,86 @@
       position: relative;
       margin-top: 36px;
       z-index: 2;
+      box-shadow: 0 16px 36px rgba(139, 77, 245, 0.35);
       color: #FFFFFF;
-      box-shadow: 0 14px 34px rgba(139, 77, 245, 0.4);
-      display: flex;
-      flex-direction: column;
     }
     .front-card-top {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
     .card-brand {
       display: flex;
       align-items: center;
       gap: 6px;
       font-weight: 800;
-      font-size: 14px;
+      font-size: 13px;
+      letter-spacing: 0.5px;
     }
     .front-card-number {
       font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
       font-size: 12px;
-      letter-spacing: 1.5px;
-      opacity: 0.9;
+      opacity: 0.85;
+      letter-spacing: 1px;
     }
     .balance-label {
       font-size: 12px;
+      font-weight: 600;
       opacity: 0.8;
-      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
     .balance-amount {
       font-size: 34px;
       font-weight: 800;
-      letter-spacing: -0.8px;
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: -0.5px;
       margin-top: 2px;
-      font-variant-numeric: tabular-nums;
+      margin-bottom: 20px;
     }
     .front-card-bottom {
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
-      margin-top: 18px;
-    }
-    .holder-info {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
     }
     .holder-label {
       font-size: 10px;
-      opacity: 0.7;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+      font-weight: 700;
+      opacity: 0.75;
+      letter-spacing: 0.6px;
     }
     .holder-name {
-      font-size: 13px;
-      font-weight: 700;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.2px;
+      margin-top: 2px;
     }
-
     .add-action-pill {
-      background: #000000;
-      color: #FFFFFF;
+      background: #FFFFFF;
+      color: #000000;
       border: none;
+      border-radius: 20px;
       padding: 10px 18px;
-      border-radius: 30px;
       font-size: 13px;
-      font-weight: 700;
+      font-weight: 800;
       display: flex;
       align-items: center;
       gap: 6px;
       cursor: pointer;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
-      transition: transform 0.2s;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      transition: transform 0.2s, box-shadow 0.2s;
     }
-    .add-action-pill:active { transform: scale(0.95); }
+    .add-action-pill:active { transform: scale(0.94); }
 
-    /* ========================================================
-       INTERACTIVE PROFESSIONAL EQUITY CURVE WITH SCRUBBER
-       ======================================================== */
+    /* Chart */
     .chart-container {
       background: var(--card-bg);
       border: 1px solid var(--border);
-      border-radius: 28px;
-      padding: 18px 20px;
+      border-radius: 26px;
+      padding: 20px;
       margin-bottom: 24px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
-      position: relative;
     }
     .chart-header-row {
       display: flex;
@@ -386,40 +329,30 @@
       align-items: center;
       margin-bottom: 12px;
     }
-    .chart-title {
-      font-size: 12px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.6px;
-      color: var(--text-muted);
-    }
-    .chart-scrub-val {
-      font-size: 16px;
-      font-weight: 800;
-      color: var(--profit);
-      font-variant-numeric: tabular-nums;
-    }
+    .chart-title { font-size: 14px; font-weight: 700; color: var(--text-muted); }
+    .chart-scrub-val { font-size: 17px; font-weight: 800; font-family: 'JetBrains Mono', monospace; }
+
     .chart-time-pills {
       display: flex;
       gap: 6px;
       margin-bottom: 16px;
+      overflow-x: auto;
     }
     .time-chip {
-      background: var(--card-subtle);
-      border: 1px solid var(--border);
-      color: var(--text-muted);
-      padding: 4px 10px;
-      border-radius: 20px;
-      font-size: 10px;
+      padding: 6px 12px;
+      border-radius: 12px;
+      font-size: 11px;
       font-weight: 700;
+      background: var(--card-subtle);
+      color: var(--text-muted);
       cursor: pointer;
+      border: 1px solid transparent;
       user-select: none;
-      transition: all 0.2s;
     }
     .time-chip.active {
-      background: var(--text-main);
-      color: var(--bg);
-      border-color: var(--text-main);
+      background: var(--card-elevated);
+      color: var(--text-main);
+      border-color: var(--border-prominent);
     }
 
     .chart-svg-box {
@@ -428,18 +361,12 @@
       position: relative;
       cursor: crosshair;
     }
-    .chart-svg-box svg {
-      width: 100%;
-      height: 100%;
-      overflow: visible;
-    }
+    .chart-svg-box svg { width: 100%; height: 100%; overflow: visible; }
 
-    /* Scrubber Vertical Line & Tooltip */
     .scrub-line {
       position: absolute;
-      top: 0;
-      bottom: 0;
-      width: 1.5px;
+      top: 0; bottom: 0;
+      width: 1px;
       background: rgba(255, 255, 255, 0.4);
       pointer-events: none;
       display: none;
@@ -450,7 +377,7 @@
       height: 10px;
       border-radius: 50%;
       background: #FFFFFF;
-      box-shadow: 0 0 12px #30D158;
+      border: 2px solid #8B4DF5;
       transform: translate(-50%, -50%);
       pointer-events: none;
       display: none;
@@ -459,178 +386,124 @@
       position: absolute;
       top: -30px;
       transform: translateX(-50%);
-      background: #000000;
-      color: #FFFFFF;
-      border: 1px solid var(--border);
-      padding: 3px 8px;
+      background: var(--card-elevated);
+      border: 1px solid var(--border-prominent);
+      padding: 4px 8px;
       border-radius: 8px;
-      font-size: 10px;
-      font-weight: 700;
+      font-size: 11px;
+      font-weight: 800;
+      font-family: 'JetBrains Mono';
       pointer-events: none;
-      white-space: nowrap;
       display: none;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      white-space: nowrap;
     }
 
-    /* ========================================================
-       PROP-FIRM DAILY PERFORMANCE P&L BARS
-       ======================================================== */
+    /* Session Bars */
     .daily-bars-container {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 18px 20px;
       margin-bottom: 24px;
     }
     .bars-row {
       display: flex;
       justify-content: space-between;
-      gap: 6px;
-      margin-top: 10px;
+      align-items: flex-end;
+      height: 70px;
+      margin-top: 12px;
+      padding: 0 4px;
     }
     .bar-day-card {
-      flex: 1;
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 10px 4px;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 6px;
-      cursor: pointer;
-      transition: transform 0.2s;
+      width: 50px;
     }
-    .bar-day-card:active { transform: scale(0.95); }
-    .bar-day-name {
-      font-size: 10px;
-      font-weight: 600;
-      color: var(--text-muted);
-    }
-    .bar-visual {
-      width: 10px;
-      border-radius: 6px;
-      transition: height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .bar-visual.bar-green {
-      background: var(--profit);
-      box-shadow: 0 0 10px var(--profit-glow);
-    }
-    .bar-visual.bar-red {
-      background: var(--loss);
-      box-shadow: 0 0 10px var(--loss-glow);
-    }
-    .bar-day-pnl {
-      font-size: 9px;
-      font-weight: 800;
-      font-variant-numeric: tabular-nums;
-    }
+    .bar-day-name { font-size: 11px; font-weight: 600; color: var(--text-muted); }
+    .bar-visual { width: 14px; border-radius: 4px; min-height: 4px; }
+    .bar-visual.bar-green { background: #30D158; box-shadow: 0 0 10px rgba(48,209,88,0.4); }
+    .bar-visual.bar-red { background: #FF453A; box-shadow: 0 0 10px rgba(255,69,58,0.4); }
+    .bar-visual.bar-neutral { background: var(--card-elevated); }
+    .bar-day-pnl { font-size: 10px; font-weight: 700; font-family: 'JetBrains Mono'; }
 
-    /* ========================================================
-       ACCORDION TRADE CARDS (EXPAND TO SHOW EXACT DHAN FEES)
-       ======================================================== */
+    /* Accordion */
     .trade-accordion-item {
       background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: 20px;
       margin-bottom: 12px;
       overflow: hidden;
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: border-color 0.2s;
     }
     .trade-accordion-header {
-      padding: 16px 18px;
+      padding: 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       cursor: pointer;
     }
-    .trade-header-left {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
+    .trade-header-left { display: flex; align-items: center; gap: 12px; }
     .trade-icon-circle {
-      width: 40px;
-      height: 40px;
+      width: 40px; height: 40px;
       border-radius: 50%;
       background: var(--card-subtle);
-      border: 1px solid var(--border);
       display: flex;
       align-items: center;
       justify-content: center;
     }
-    .trade-info {
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-    }
-    .trade-sym-title {
-      font-size: 14px;
-      font-weight: 800;
-      color: var(--text-main);
-    }
-    .trade-sub-meta {
-      font-size: 11px;
-      color: var(--text-muted);
-      font-weight: 500;
-    }
-
-    .trade-header-right {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 3px;
-    }
-    .trade-net-amount {
-      font-size: 16px;
-      font-weight: 800;
-      font-variant-numeric: tabular-nums;
-    }
+    .trade-info { display: flex; flex-direction: column; }
+    .trade-sym-title { font-size: 14px; font-weight: 800; }
+    .trade-sub-meta { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+    .trade-header-right { display: flex; align-items: center; gap: 10px; }
+    .trade-net-amount { font-size: 15px; font-weight: 800; font-family: 'JetBrains Mono'; }
     .val-green { color: var(--profit); }
     .val-red { color: var(--loss); }
+    .trade-chevron { font-size: 10px; color: var(--text-muted); transition: transform 0.2s; }
+    .trade-accordion-item.open .trade-chevron { transform: rotate(180deg); }
 
-    .trade-chevron {
-      font-size: 12px;
-      color: var(--text-sub);
-      transition: transform 0.25s ease;
-    }
-    .trade-accordion-item.open .trade-chevron {
-      transform: rotate(180deg);
-    }
-
-    /* Expandable Accordion Body */
     .trade-accordion-body {
       max-height: 0;
       overflow: hidden;
-      transition: max-height 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: max-height 0.25s cubic-bezier(0.16, 1, 0.3, 1);
       background: var(--card-subtle);
-      border-top: 1px solid var(--border);
+      border-top: 1px solid transparent;
     }
     .trade-accordion-item.open .trade-accordion-body {
-      max-height: 280px;
+      max-height: 380px;
+      border-top-color: var(--border);
     }
-    .accordion-inner-content {
-      padding: 14px 18px 18px 18px;
-    }
+    .accordion-inner-content { padding: 14px 16px; }
     .fee-row {
       display: flex;
       justify-content: space-between;
       font-size: 12px;
-      color: var(--text-muted);
       margin-bottom: 6px;
     }
-    .fee-row strong {
-      color: var(--text-main);
-      font-weight: 700;
-    }
+    .fee-row span { color: var(--text-muted); }
+    .fee-row strong { font-family: 'JetBrains Mono'; }
     .fee-divider {
       border: none;
-      border-top: 1px dashed var(--border);
+      border-top: 1px solid var(--border);
       margin: 8px 0;
     }
+    .delete-trade-btn {
+      background: rgba(255, 69, 58, 0.12);
+      border: 1px solid rgba(255, 69, 58, 0.25);
+      color: #FF453A;
+      border-radius: 8px;
+      padding: 5px 12px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 10px;
+    }
 
-    /* ========================================================
-       FLOATING PILL NAVIGATION DOCK
-       ======================================================== */
+    /* Floating Dock */
     .dock-container {
       position: absolute;
-      bottom: 22px;
+      bottom: 24px;
       left: 0; right: 0;
       display: flex;
       justify-content: center;
@@ -638,115 +511,167 @@
       pointer-events: none;
     }
     .dock-pill {
-      pointer-events: auto;
       background: var(--dock-bg);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 40px;
+      border: 1px solid var(--border-prominent);
+      border-radius: 36px;
       padding: 6px 8px;
       display: flex;
       align-items: center;
       gap: 6px;
-      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7);
+      pointer-events: auto;
     }
     .dock-tab-btn {
-      width: 42px;
-      height: 42px;
+      width: 44px; height: 44px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #8E8E93;
+      color: var(--text-muted);
       cursor: pointer;
       transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-      user-select: none;
     }
     .dock-tab-btn.active {
       background: var(--accent-pill);
       color: var(--accent-pill-text);
-      border-radius: 30px;
-      padding: 0 16px;
       width: auto;
-      gap: 6px;
-      font-size: 13px;
+      padding: 0 18px;
+      border-radius: 22px;
       font-weight: 800;
-      box-shadow: 0 4px 12px rgba(255, 255, 255, 0.25);
+      font-size: 13px;
+      gap: 6px;
     }
-    .dock-tab-btn.active svg { stroke: #000000; }
 
-    /* Modal Sheet for Fast Trade Punch */
+    /* Modals & Sheets */
     .modal-sheet {
-      display: none;
       position: absolute;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 0, 0, 0.75);
-      backdrop-filter: blur(10px);
-      z-index: 100;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(8px);
+      z-index: 90;
+      display: flex;
       align-items: flex-end;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
     }
-    .modal-sheet.show { display: flex; }
+    .modal-sheet.show { opacity: 1; pointer-events: auto; }
     .sheet-card {
       width: 100%;
       background: var(--card-bg);
-      border-top: 1px solid var(--border-prominent);
-      border-radius: 32px 32px 0 0;
-      padding: 22px 22px 34px 22px;
-      animation: slideSheet 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+      border-top-left-radius: 28px;
+      border-top-right-radius: 28px;
+      border: 1px solid var(--border);
+      border-bottom: none;
+      padding: 20px 22px 36px 22px;
+      transform: translateY(100%);
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    @keyframes slideSheet {
-      from { transform: translateY(100%); }
-      to { transform: translateY(0); }
-    }
+    .modal-sheet.show .sheet-card { transform: translateY(0); }
     .sheet-notch {
-      width: 40px; height: 5px;
-      background: var(--text-sub);
-      border-radius: 3px;
-      margin: 0 auto 18px auto;
+      width: 40px; height: 4px;
+      background: var(--card-elevated);
+      border-radius: 2px;
+      margin: 0 auto 16px auto;
     }
-
-    .form-row {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 12px;
-    }
-    .form-group {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-    .form-label {
-      font-size: 10px;
-      font-weight: 700;
-      color: var(--text-muted);
-      text-transform: uppercase;
-    }
+    .form-row { display: flex; gap: 10px; margin-bottom: 12px; }
+    .form-group { flex: 1; display: flex; flex-direction: column; }
+    .form-label { font-size: 11px; font-weight: 700; color: var(--text-muted); margin-bottom: 6px; }
     .input-box {
       width: 100%;
+      height: 42px;
       background: var(--card-subtle);
       border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 10px 14px;
       color: var(--text-main);
-      font-size: 15px;
-      font-weight: 700;
+      padding: 0 12px;
+      font-size: 13px;
+      font-weight: 600;
       outline: none;
+      font-family: 'Plus Jakarta Sans', sans-serif;
     }
-
+    .input-box:focus { border-color: var(--card-purple); }
     .submit-btn {
       width: 100%;
-      height: 50px;
+      height: 48px;
+      border-radius: 14px;
       background: var(--card-purple);
       color: #FFFFFF;
       border: none;
-      border-radius: 16px;
-      font-size: 14px;
       font-weight: 800;
+      font-size: 14px;
       cursor: pointer;
-      margin-top: 10px;
+      box-shadow: 0 8px 20px rgba(139, 77, 245, 0.35);
+      margin-top: 8px;
+    }
+    .submit-btn:active { transform: scale(0.97); }
+
+    /* Slide-out Navigation Drawer (3-Line Menu) */
+    .drawer-overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .drawer-overlay.open { opacity: 1; pointer-events: auto; }
+    .drawer-panel {
+      position: absolute;
+      top: 0; left: 0; bottom: 0;
+      width: 310px;
+      max-width: 85%;
+      background: var(--card-bg);
+      border-right: 1px solid var(--border);
+      box-shadow: 10px 0 40px rgba(0, 0, 0, 0.6);
+      transform: translateX(-100%);
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      padding: 24px 18px;
+      overflow-y: auto;
+    }
+    .drawer-overlay.open .drawer-panel { transform: translateX(0); }
+    .drawer-header {
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 8px;
+      gap: 12px;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .drawer-title { font-size: 16px; font-weight: 800; color: var(--text-main); }
+    .drawer-sub { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+    .drawer-section-label {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: var(--text-sub);
+      margin: 14px 0 8px 4px;
+    }
+    .drawer-btn {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: var(--card-subtle);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-bottom: 8px;
+      transition: all 0.2s;
+    }
+    .drawer-btn:active { transform: scale(0.97); }
+    .drawer-btn:hover {
+      background: var(--card-elevated);
+      border-color: var(--border-prominent);
     }
   </style>
 </head>
@@ -763,15 +688,15 @@
 
   <!-- Header -->
   <div class="header-bar">
-    <div class="round-action-btn" onclick="toggleTheme()" title="Switch Light/Dark Mode">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="14" y2="12"/><line x1="4" y1="17" x2="18" y2="17"/></svg>
+    <div class="round-action-btn" onclick="openMenuDrawer()" title="Open Menu">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
     </div>
     
     <div class="header-right">
       <div class="round-action-btn" onclick="togglePrivacy()" title="Privacy Mode">
         <svg id="privacyIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
       </div>
-      <div class="user-avatar" onclick="toggleTheme()" title="Meet Pandya">
+      <div class="user-avatar" onclick="openMenuDrawer()" title="Meet Pandya">
         M
       </div>
     </div>
@@ -784,18 +709,21 @@
     <div id="tab-home" class="tab-view active">
       <div class="greeting-section">
         <h1 class="greeting-title">Hello Meet!</h1>
-        <p class="greeting-subtitle" id="dayPnlSummary">Today: +₹5,445.50 • Supabase Cloud Active 🟢</p>
+        <p class="greeting-subtitle" id="dayPnlSummary">Today: ₹0.00 (0 Trades) • Ready for executions ⚪</p>
       </div>
 
       <!-- STACKED DUAL CARDS -->
       <div class="card-stack-container">
-        <!-- Back Yellow Card (Dhan Trading Profile) -->
+        <!-- Back Yellow Card (Allocated Capital) -->
         <div class="back-card">
           <div class="back-card-chip">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
-            <span>DHAN TRADING PROFILE</span>
+            <span>CAPITAL ALLOCATED</span>
           </div>
-          <div class="back-card-number">MEET PANDYA • INDEPENDENT</div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span class="back-card-number" id="allocatedCapitalDisplay">₹0.00</span>
+            <button onclick="openCapitalModal()" style="background:#000; color:#F6C84C; border:none; border-radius:12px; padding:4px 10px; font-size:11px; font-weight:800; cursor:pointer;">+ Manage</button>
+          </div>
         </div>
 
         <!-- Front Purple Card (Total Realized Net Capital) -->
@@ -808,8 +736,8 @@
             <div class="front-card-number">•••• •••• 4364</div>
           </div>
 
-          <span class="balance-label">Total Realized Net</span>
-          <div class="balance-amount" id="balanceAmount">₹2,45,800.00</div>
+          <span class="balance-label">Total Realized Net Capital</span>
+          <div class="balance-amount" id="balanceAmount">₹0.00</div>
 
           <div class="front-card-bottom">
             <div class="holder-info">
@@ -829,7 +757,7 @@
       <div class="chart-container">
         <div class="chart-header-row">
           <span class="chart-title">Capital Trajectory</span>
-          <span class="chart-scrub-val" id="chartValueDisplay">₹2,45,800.00</span>
+          <span class="chart-scrub-val" id="chartValueDisplay">₹0.00</span>
         </div>
 
         <!-- Time Range Filters -->
@@ -847,17 +775,17 @@
           <svg viewBox="0 0 350 100" preserveAspectRatio="none">
             <defs>
               <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#30D158" stop-opacity="0.35"/>
+                <stop offset="0%" stop-color="#30D158" stop-opacity="0.25"/>
                 <stop offset="100%" stop-color="#30D158" stop-opacity="0.0"/>
               </linearGradient>
             </defs>
-            <path id="chartFillPath" d="M0,80 Q50,75 100,60 T200,45 T280,30 T350,15 L350,100 L0,100 Z" fill="url(#chartGradient)"/>
-            <path id="chartStrokePath" d="M0,80 Q50,75 100,60 T200,45 T280,30 T350,15" stroke="#30D158" stroke-width="2.5" fill="none"/>
+            <path id="chartFillPath" d="M0,50 L350,50 L350,100 L0,100 Z" fill="url(#chartGradient)"/>
+            <path id="chartStrokePath" d="M0,50 L350,50" stroke="#8E8E93" stroke-width="2" stroke-dasharray="4" fill="none"/>
           </svg>
           
           <div class="scrub-line" id="scrubLine"></div>
           <div class="scrub-dot" id="scrubDot"></div>
-          <div class="scrub-tooltip" id="scrubTooltip">₹2,45,800.00</div>
+          <div class="scrub-tooltip" id="scrubTooltip">₹0.00</div>
         </div>
       </div>
 
@@ -865,155 +793,22 @@
       <div class="daily-bars-container">
         <div style="display:flex; justify-content:space-between; align-items:center;">
           <span style="font-size:12px; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.6px;">Weekly Sessions</span>
-          <span style="font-size:11px; font-weight:700; color:var(--profit);">71% Green Days</span>
+          <span style="font-size:11px; font-weight:700;" id="sessionStreakLabel">Awaiting Trades ⚪</span>
         </div>
 
-        <div class="bars-row">
-          <div class="bar-day-card" onclick="alert('Mon: +₹3,400.00 (ORB Nifty Scalp)')">
-            <span class="bar-day-name">Mon</span>
-            <div class="bar-visual bar-green" style="height:38px;"></div>
-            <span class="bar-day-pnl val-green">+3.4k</span>
-          </div>
-          <div class="bar-day-card" onclick="alert('Tue: +₹1,200.00 (BankNifty Reversal)')">
-            <span class="bar-day-name">Tue</span>
-            <div class="bar-visual bar-green" style="height:22px;"></div>
-            <span class="bar-day-pnl val-green">+1.2k</span>
-          </div>
-          <div class="bar-day-card" onclick="alert('Wed: -₹850.00 (Stopped out early)')">
-            <span class="bar-day-name">Wed</span>
-            <div class="bar-visual bar-red" style="height:16px;"></div>
-            <span class="bar-day-pnl val-red">-850</span>
-          </div>
-          <div class="bar-day-card" onclick="alert('Thu: +₹4,500.00 (Expiry Hero-Zero CE)')">
-            <span class="bar-day-name">Thu</span>
-            <div class="bar-visual bar-green" style="height:48px;"></div>
-            <span class="bar-day-pnl val-green">+4.5k</span>
-          </div>
-          <div class="bar-day-card" onclick="alert('Fri: +₹2,100.00 (Sensex Momentum)')">
-            <span class="bar-day-name">Fri</span>
-            <div class="bar-visual bar-green" style="height:28px;"></div>
-            <span class="bar-day-pnl val-green">+2.1k</span>
-          </div>
-          <div class="bar-day-card" onclick="alert('Mon: -₹1,250.00 (Chased breakout)')">
-            <span class="bar-day-name">Mon</span>
-            <div class="bar-visual bar-red" style="height:22px;"></div>
-            <span class="bar-day-pnl val-red">-1.2k</span>
-          </div>
-          <div class="bar-day-card" style="border-color:var(--profit);" onclick="alert('Today: +₹5,445.50 Realized')">
-            <span class="bar-day-name" style="color:var(--text-main); font-weight:800;">Today</span>
-            <div class="bar-visual bar-green" style="height:56px;"></div>
-            <span class="bar-day-pnl val-green">+5.4k</span>
-          </div>
+        <div class="bars-row" id="sessionBarsRow">
+          <!-- Dynamically populated from Supabase -->
         </div>
       </div>
 
-      <!-- ACCORDION TRADE BREAKDOWNS (TAP TO EXPAND) -->
+      <!-- ACCORDION TRADE BREAKDOWNS -->
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
         <span style="font-size:12px; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.6px;">Executions & Real Take-Home</span>
         <span style="font-size:11px; font-weight:600; color:var(--text-sub);">Tap to expand</span>
       </div>
 
       <div id="tradesAccordionContainer">
-        <!-- Trade 1 -->
-        <div class="trade-accordion-item" id="trade-1">
-          <div class="trade-accordion-header" onclick="toggleAccordion('trade-1')">
-            <div class="trade-header-left">
-              <div class="trade-icon-circle">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#30D158" stroke-width="2.2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
-              </div>
-              <div class="trade-info">
-                <span class="trade-sym-title">NIFTY 24500 CE</span>
-                <span class="trade-sub-meta">ORB Scalp • 50 Qty (2 Lots)</span>
-              </div>
-            </div>
-            <div class="trade-header-right">
-              <span class="trade-net-amount val-green">+₹3,391.80</span>
-              <span class="trade-chevron">▼</span>
-            </div>
-          </div>
-          <div class="trade-accordion-body">
-            <div class="accordion-inner-content">
-              <div class="fee-row"><span>Points Captured:</span><strong>+33.50 pts (₹120.50 → ₹154.00)</strong></div>
-              <div class="fee-row"><span>Holding Duration:</span><strong>42 mins (10:14 am - 10:56 am)</strong></div>
-              <div class="fee-row"><span>Gross Realized P&L:</span><strong class="val-green">+₹3,450.00</strong></div>
-              <hr class="fee-divider">
-              <div class="fee-row"><span>Dhan Brokerage (₹20 buy + ₹20 sell):</span><strong style="color:var(--loss);">-₹40.00</strong></div>
-              <div class="fee-row"><span>STT (0.1% on Sell Premium):</span><strong style="color:var(--loss);">-₹7.70</strong></div>
-              <div class="fee-row"><span>Exchange Txn + GST:</span><strong style="color:var(--loss);">-₹10.50</strong></div>
-              <hr class="fee-divider">
-              <div class="fee-row" style="font-size:13px; font-weight:800;">
-                <span style="color:var(--text-main);">Net Deposited Capital:</span>
-                <strong class="val-green" style="font-size:15px;">+₹3,391.80</strong>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Trade 2 -->
-        <div class="trade-accordion-item" id="trade-2">
-          <div class="trade-accordion-header" onclick="toggleAccordion('trade-2')">
-            <div class="trade-header-left">
-              <div class="trade-icon-circle">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF453A" stroke-width="2.2"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/></svg>
-              </div>
-              <div class="trade-info">
-                <span class="trade-sym-title">BANKNIFTY 52000 PE</span>
-                <span class="trade-sub-meta">Fade Entry • 15 Qty (1 Lot)</span>
-              </div>
-            </div>
-            <div class="trade-header-right">
-              <span class="trade-net-amount val-red">-₹1,252.40</span>
-              <span class="trade-chevron">▼</span>
-            </div>
-          </div>
-          <div class="trade-accordion-body">
-            <div class="accordion-inner-content">
-              <div class="fee-row"><span>Points Lost:</span><strong>-80.00 pts (₹280 → ₹200)</strong></div>
-              <div class="fee-row"><span>Holding Duration:</span><strong>18 mins (11:32 am - 11:50 am)</strong></div>
-              <div class="fee-row"><span>Gross Realized P&L:</span><strong class="val-red">-₹1,200.00</strong></div>
-              <hr class="fee-divider">
-              <div class="fee-row"><span>Dhan Brokerage:</span><strong style="color:var(--loss);">-₹40.00</strong></div>
-              <div class="fee-row"><span>STT + Exchange + GST:</span><strong style="color:var(--loss);">-₹12.40</strong></div>
-              <hr class="fee-divider">
-              <div class="fee-row" style="font-size:13px; font-weight:800;">
-                <span style="color:var(--text-main);">Net Deducted:</span>
-                <strong class="val-red" style="font-size:15px;">-₹1,252.40</strong>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Trade 3 -->
-        <div class="trade-accordion-item" id="trade-3">
-          <div class="trade-accordion-header" onclick="toggleAccordion('trade-3')">
-            <div class="trade-header-left">
-              <div class="trade-icon-circle">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#30D158" stroke-width="2.2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
-              </div>
-              <div class="trade-info">
-                <span class="trade-sym-title">RELIANCE 3000 CE</span>
-                <span class="trade-sub-meta">Stock Option • 250 Qty (1 Lot)</span>
-              </div>
-            </div>
-            <div class="trade-header-right">
-              <span class="trade-net-amount val-green">+₹2,185.90</span>
-              <span class="trade-chevron">▼</span>
-            </div>
-          </div>
-          <div class="trade-accordion-body">
-            <div class="accordion-inner-content">
-              <div class="fee-row"><span>Points Captured:</span><strong>+9.00 pts (₹35.00 → ₹44.00)</strong></div>
-              <div class="fee-row"><span>Gross Realized P&L:</span><strong class="val-green">+₹2,250.00</strong></div>
-              <hr class="fee-divider">
-              <div class="fee-row"><span>Total Statutory Deductions:</span><strong style="color:var(--loss);">-₹64.10</strong></div>
-              <hr class="fee-divider">
-              <div class="fee-row" style="font-size:13px; font-weight:800;">
-                <span style="color:var(--text-main);">Realized Net:</span>
-                <strong class="val-green" style="font-size:15px;">+₹2,185.90</strong>
-              </div>
-            </div>
-          </div>
-        </div>
+        <!-- Dynamically populated from Supabase or empty state -->
       </div>
     </div>
 
@@ -1023,9 +818,9 @@
       <div style="background:var(--card-bg); border:1px solid var(--border); border-radius:24px; padding:20px; margin-bottom:20px;">
         <div style="display:flex; justify-content:space-between; font-weight:800; font-size:15px; margin-bottom:14px;">
           <span>NOVEMBER 2026</span>
-          <span style="color:var(--profit);">+₹32,490 Realized</span>
+          <span id="calMonthNet" style="color:var(--text-muted);">₹0.00 Realized</span>
         </div>
-        <div style="display:grid; grid-template-columns: repeat(7, 1fr); gap:6px; text-align:center; font-size:11px;">
+        <div style="display:grid; grid-template-columns: repeat(7, 1fr); gap:6px; text-align:center; font-size:11px;" id="calendarGrid">
           <div style="color:var(--text-muted); font-weight:700;">M</div>
           <div style="color:var(--text-muted); font-weight:700;">T</div>
           <div style="color:var(--text-muted); font-weight:700;">W</div>
@@ -1033,32 +828,18 @@
           <div style="color:var(--text-muted); font-weight:700;">F</div>
           <div style="color:var(--text-muted); font-weight:700;">S</div>
           <div style="color:var(--text-muted); font-weight:700;">S</div>
-
-          <div style="padding:10px 0; border-radius:8px; background:var(--card-subtle); color:var(--text-sub);">1</div>
-          <div style="padding:10px 0; border-radius:8px; background:var(--card-subtle); color:var(--text-sub);">2</div>
-          <div style="padding:10px 0; border-radius:8px; background:rgba(48,209,88,0.2); color:#30D158; font-weight:800; cursor:pointer;" onclick="alert('Nov 3: +₹3,400.00\nDisciplined 15M ORB')">3</div>
-          <div style="padding:10px 0; border-radius:8px; background:rgba(48,209,88,0.1); color:#30D158;">4</div>
-          <div style="padding:10px 0; border-radius:8px; background:rgba(255,69,58,0.2); color:#FF453A; font-weight:800; cursor:pointer;" onclick="alert('Nov 5: -₹850.00\nRespected stop-loss')">5</div>
-          <div style="padding:10px 0; border-radius:8px; background:var(--card-subtle); color:var(--text-sub);">6</div>
-          <div style="padding:10px 0; border-radius:8px; background:var(--card-subtle); color:var(--text-sub);">7</div>
-
-          <div style="padding:10px 0; border-radius:8px; background:rgba(48,209,88,0.25); color:#30D158; font-weight:900;">8</div>
-          <div style="padding:10px 0; border-radius:8px; background:rgba(48,209,88,0.15); color:#30D158;">9</div>
-          <div style="padding:10px 0; border-radius:8px; background:rgba(48,209,88,0.3); color:#30D158; font-weight:900;">10</div>
-          <div style="padding:10px 0; border-radius:8px; background:var(--card-subtle); color:var(--text-sub);">11</div>
-          <div style="padding:10px 0; border-radius:8px; background:rgba(255,69,58,0.15); color:#FF453A;">12</div>
-          <div style="padding:10px 0; border-radius:8px; background:var(--card-subtle); color:var(--text-sub);">13</div>
-          <div style="padding:10px 0; border-radius:8px; background:var(--card-subtle); color:var(--text-sub);">14</div>
+          <!-- Days populated dynamically -->
         </div>
       </div>
       
       <div style="background:var(--card-bg); border:1px solid var(--border); border-radius:20px; padding:18px;">
         <h4 style="font-size:13px; font-weight:800; margin-bottom:8px;">Discipline Review</h4>
         <div style="font-size:12px; color:var(--text-muted); line-height:1.6;">
-          • Rule adherence: <strong>94%</strong><br>
-          • Average winner: <strong>+₹2,840</strong><br>
-          • Average loser: <strong>-₹1,020</strong><br>
-          • Payoff Ratio: <strong>1 : 2.78</strong>
+          • Total Logged Sessions: <strong id="calTotalSessions">0</strong><br>
+          • Win Rate: <strong id="calWinRate">0%</strong><br>
+          • Average Winner: <strong id="calAvgWin">₹0.00</strong><br>
+          • Average Loser: <strong id="calAvgLoss">₹0.00</strong><br>
+          • Payoff Ratio: <strong id="calPayoff">1 : 0.0</strong>
         </div>
       </div>
     </div>
@@ -1068,19 +849,19 @@
       <h2 style="font-size:22px; font-weight:800; margin-bottom:14px;">F&O Tax Hub (PGBP)</h2>
       <div style="background:var(--card-bg); border:1px solid var(--border); border-radius:24px; padding:20px; margin-bottom:18px;">
         <span style="font-size:10px; font-weight:700; color:var(--text-muted); text-transform:uppercase;">ICAI Running Turnover (FY 2026-27)</span>
-        <div style="font-size:30px; font-weight:900; margin:6px 0 10px 0;">₹14,25,800.00</div>
+        <div id="taxTurnoverDisplay" style="font-size:30px; font-weight:900; margin:6px 0 10px 0; font-family:'JetBrains Mono';">₹0.00</div>
         <div style="font-size:11px; color:var(--profit); font-weight:700;">✅ Well within ₹10 Crore threshold (No Audit Required)</div>
       </div>
 
       <div style="background:var(--card-bg); border:1px solid var(--border); border-radius:20px; padding:18px;">
         <h4 style="font-size:13px; font-weight:800; margin-bottom:12px;">Allowable Deductions Breakdown</h4>
-        <div class="fee-row"><span>Gross Trading Profits:</span><strong class="val-green">+₹1,85,400.00</strong></div>
-        <div class="fee-row"><span>Less: Dhan Brokerage & STT:</span><strong style="color:var(--loss);">-₹14,250.00</strong></div>
-        <div class="fee-row"><span>Less: Trading Internet & Hardware:</span><strong style="color:var(--loss);">-₹15,000.00</strong></div>
+        <div class="fee-row"><span>Gross Trading Profits:</span><strong id="taxGrossProfits" class="val-green">₹0.00</strong></div>
+        <div class="fee-row"><span>Less: Dhan Brokerage & STT:</span><strong id="taxBrokerageTotal" style="color:var(--loss);">-₹0.00</strong></div>
+        <div class="fee-row"><span>Less: Trading Internet & Hardware:</span><strong id="taxDeductionsTotal" style="color:var(--loss);">-₹0.00</strong></div>
         <hr class="fee-divider">
         <div class="fee-row" style="font-size:13px; font-weight:800;">
           <span>Net Taxable Business Income:</span>
-          <strong class="val-green" style="font-size:16px;">+₹1,56,150.00</strong>
+          <strong id="taxNetBusinessIncome" class="val-green" style="font-size:16px;">₹0.00</strong>
         </div>
       </div>
     </div>
@@ -1194,6 +975,89 @@
       </button>
     </div>
   </div>
+
+  <!-- CAPITAL MANAGEMENT MODAL -->
+  <div class="modal-sheet" id="capitalModal" onclick="closeCapitalModal()">
+    <div class="sheet-card" onclick="event.stopPropagation()">
+      <div class="sheet-notch"></div>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+        <div>
+          <h3 style="font-size:18px; font-weight:800;">Manage Capital</h3>
+          <p style="font-size:12px; color:var(--text-muted); margin-top:2px;">Deposit funds, record payouts, or calibrate starting capital</p>
+        </div>
+        <button class="round-action-btn" onclick="closeCapitalModal()" style="width:32px; height:32px;">✕</button>
+      </div>
+
+      <div style="display:flex; gap:6px; margin-bottom:14px;">
+        <div class="time-chip active" id="capTabDeposit" onclick="setCapitalType('DEPOSIT', this)">+ Deposit</div>
+        <div class="time-chip" id="capTabWithdraw" onclick="setCapitalType('WITHDRAWAL', this)">- Payout</div>
+        <div class="time-chip" id="capTabSet" onclick="setCapitalType('SET_BASE', this)">Set Starting Baseline</div>
+      </div>
+
+      <div class="form-group" style="margin-bottom:12px;">
+        <label class="form-label" id="capAmountLabel">Amount (₹)</label>
+        <input type="number" id="capitalAmountInput" class="input-box" placeholder="e.g. 100000" step="1000">
+      </div>
+
+      <div class="form-group" style="margin-bottom:14px;">
+        <label class="form-label">Note / Reference</label>
+        <input type="text" id="capitalNoteInput" class="input-box" placeholder="e.g. Dhan account starting balance">
+      </div>
+
+      <button class="submit-btn" onclick="submitCapitalChange()">
+        <span>SAVE TO CLOUD LEDGER</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- SLIDE-OUT NAVIGATION DRAWER (3-LINE MENU) -->
+  <div class="drawer-overlay" id="menuDrawer" onclick="closeMenuDrawer()">
+    <div class="drawer-panel" onclick="event.stopPropagation()">
+      <div class="drawer-header">
+        <div class="user-avatar" style="width:48px; height:48px; font-size:18px;">M</div>
+        <div>
+          <div class="drawer-title">Meet Pandya</div>
+          <div class="drawer-sub">Dhan F&O Independent Ledger</div>
+          <span style="display:inline-block; margin-top:4px; font-size:10px; font-weight:800; background:rgba(48,209,88,0.15); color:#30D158; padding:2px 8px; border-radius:10px;">Cloud Active 🟢</span>
+        </div>
+      </div>
+
+      <div class="drawer-section-label">Capital & Funds</div>
+      <button class="drawer-btn" onclick="closeMenuDrawer(); openCapitalModal(); setCapitalType('DEPOSIT', document.getElementById('capTabDeposit'));">
+        <span>💰</span><span>Deposit / Add Capital</span>
+      </button>
+      <button class="drawer-btn" onclick="closeMenuDrawer(); openCapitalModal(); setCapitalType('WITHDRAWAL', document.getElementById('capTabWithdraw'));">
+        <span>💸</span><span>Record Withdrawal</span>
+      </button>
+      <button class="drawer-btn" onclick="closeMenuDrawer(); openCapitalModal(); setCapitalType('SET_BASE', document.getElementById('capTabSet'));">
+        <span>🔄</span><span>Calibrate Starting Capital</span>
+      </button>
+
+      <div class="drawer-section-label">Data & Reports</div>
+      <button class="drawer-btn" onclick="exportLedgerCsv()">
+        <span>📥</span><span>Export Ledger (CSV / Excel)</span>
+      </button>
+      <button class="drawer-btn" onclick="wipeLedgerData()" style="color:#FF453A;">
+        <span>🗑️</span><span>Wipe & Reset All Data</span>
+      </button>
+
+      <div class="drawer-section-label">Preferences</div>
+      <button class="drawer-btn" onclick="toggleTheme()">
+        <span>🌓</span><span>Switch Light / Dark Theme</span>
+      </button>
+      <button class="drawer-btn" onclick="togglePrivacy()">
+        <span>👁️</span><span>Toggle Balance Privacy</span>
+      </button>
+      <button class="drawer-btn" onclick="installPWA()">
+        <span>📲</span><span>Install App on Phone</span>
+      </button>
+
+      <div style="margin-top:auto; padding-top:16px; border-top:1px solid var(--border); font-size:11px; color:var(--text-sub); text-align:center;">
+        Vega v1.0.3 • Personal F&O Ledger<br>
+        Exact Dhan Brokerage Engine
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -1202,24 +1066,24 @@
   // Supabase Cloud Configuration
   const SUPABASE_URL = 'https://trwjzrzphhphqyqbchsa.supabase.co';
   const SUPABASE_KEY = 'sb_publishable_QJynib8WhmA1eoOvsZFcrA_ngjhzz-r';
+  
   let cachedTrades = [];
+  let cachedCapitalEvents = [];
+  let currentCapitalAction = 'DEPOSIT';
+  let activeTf = '1M';
 
   // PWA Deferred Prompt
   let deferredPrompt = null;
   window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
-    const btn = document.getElementById('pwaInstallBtn');
-    if (btn) btn.style.display = 'block';
   });
 
   function installPWA() {
     if (deferredPrompt) {
       deferredPrompt.prompt();
       deferredPrompt.userChoice.then((choice) => {
-        if (choice.outcome === 'accepted') {
-          console.log('User installed Vega');
-        }
+        if (choice.outcome === 'accepted') console.log('User installed Vega');
         deferredPrompt = null;
       });
     } else {
@@ -1229,132 +1093,20 @@
 
   // Register Service Worker
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW registration error:', err));
+    navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW error:', err));
   }
 
-  // Chart Datasets
-  const chartDatasets = {
-    '1D': {
-      values: [240354, 241200, 240800, 243500, 245800],
-      dates: ['09:15 AM', '11:00 AM', '01:00 PM', '02:30 PM', '03:30 PM'],
-      dStroke: 'M0,80 Q50,75 100,78 T200,50 T280,30 T350,15',
-      dFill: 'M0,80 Q50,75 100,78 T200,50 T280,30 T350,15 L350,100 L0,100 Z'
-    },
-    '1W': {
-      values: [238000, 241400, 242600, 241750, 245800],
-      dates: ['18 Nov', '19 Nov', '20 Nov', '21 Nov', '24 Nov'],
-      dStroke: 'M0,85 Q60,60 120,50 T220,58 T350,15',
-      dFill: 'M0,85 Q60,60 120,50 T220,58 T350,15 L350,100 L0,100 Z'
-    },
-    '1M': {
-      values: [215000, 222000, 229500, 237000, 245800],
-      dates: ['28 Oct', '05 Nov', '12 Nov', '19 Nov', '24 Nov'],
-      dStroke: 'M0,88 Q70,75 140,55 T250,35 T350,15',
-      dFill: 'M0,88 Q70,75 140,55 T250,35 T350,15 L350,100 L0,100 Z'
-    },
-    '3M': {
-      values: [180000, 198000, 212000, 230000, 245800],
-      dates: ['Aug', 'Sep', 'Oct', 'Nov', 'Today'],
-      dStroke: 'M0,92 Q80,78 160,58 T260,32 T350,15',
-      dFill: 'M0,92 Q80,78 160,58 T260,32 T350,15 L350,100 L0,100 Z'
-    },
-    'FY': {
-      values: [100000, 135000, 172000, 210000, 245800],
-      dates: ['Apr', 'Jul', 'Oct', 'Jan', 'Now'],
-      dStroke: 'M0,95 Q80,70 160,48 T260,25 T350,15',
-      dFill: 'M0,95 Q80,70 160,48 T260,25 T350,15 L350,100 L0,100 Z'
-    },
-    'ALL': {
-      values: [50000, 95000, 150000, 205000, 245800],
-      dates: ['2024', '2025', 'Early 2026', 'Mid 2026', 'Today'],
-      dStroke: 'M0,96 Q90,75 180,45 T270,22 T350,15',
-      dFill: 'M0,96 Q90,75 180,45 T270,22 T350,15 L350,100 L0,100 Z'
-    }
-  };
-
-  let activeTf = '1M';
-
-  function setTimeframe(tf, el) {
-    activeTf = tf;
-    document.querySelectorAll('.time-chip').forEach(c => c.classList.remove('active'));
-    el.classList.add('active');
-
-    const data = chartDatasets[tf];
-    document.getElementById('chartStrokePath').setAttribute('d', data.dStroke);
-    document.getElementById('chartFillPath').setAttribute('d', data.dFill);
-
-    const latestVal = data.values[data.values.length - 1];
-    animateNumber('chartValueDisplay', latestVal, true);
-  }
-
-  // Interactive Chart Scrubbing
-  const chartBox = document.getElementById('chartBox');
-  const scrubLine = document.getElementById('scrubLine');
-  const scrubDot = document.getElementById('scrubDot');
-  const scrubTooltip = document.getElementById('scrubTooltip');
-
-  function handleScrub(clientX) {
-    const rect = chartBox.getBoundingClientRect();
-    let x = clientX - rect.left;
-    if (x < 0) x = 0;
-    if (x > rect.width) x = rect.width;
-
-    const pct = x / rect.width;
-    const data = chartDatasets[activeTf];
-    const index = Math.min(Math.floor(pct * data.values.length), data.values.length - 1);
-
-    const val = data.values[index];
-    const dateLabel = data.dates[index];
-
-    scrubLine.style.display = 'block';
-    scrubLine.style.left = `${x}px`;
-
-    scrubDot.style.display = 'block';
-    scrubDot.style.left = `${x}px`;
-    scrubDot.style.top = `${30 + (1 - pct) * 40}px`;
-
-    scrubTooltip.style.display = 'block';
-    scrubTooltip.style.left = `${x}px`;
-    scrubTooltip.innerText = `${dateLabel}: ₹${val.toLocaleString('en-IN')}`;
-
-    document.getElementById('chartValueDisplay').innerText = `₹${val.toLocaleString('en-IN')}.00`;
-  }
-
-  chartBox.addEventListener('mousemove', e => handleScrub(e.clientX));
-  chartBox.addEventListener('touchmove', e => {
-    if (e.touches.length > 0) handleScrub(e.touches[0].clientX);
-  });
-
-  function resetScrub() {
-    scrubLine.style.display = 'none';
-    scrubDot.style.display = 'none';
-    scrubTooltip.style.display = 'none';
-    const data = chartDatasets[activeTf];
-    const latestVal = data.values[data.values.length - 1];
-    document.getElementById('chartValueDisplay').innerText = `₹${latestVal.toLocaleString('en-IN')}.00`;
-  }
-
-  chartBox.addEventListener('mouseleave', resetScrub);
-  chartBox.addEventListener('touchend', resetScrub);
-
-  // Accordion Toggle
-  function toggleAccordion(id) {
-    const el = document.getElementById(id);
-    if (!el) return;
-    const isOpen = el.classList.contains('open');
-    document.querySelectorAll('.trade-accordion-item').forEach(item => item.classList.remove('open'));
-    if (!isOpen) el.classList.add('open');
-  }
+  // Navigation Drawer
+  function openMenuDrawer() { document.getElementById('menuDrawer').classList.add('open'); }
+  function closeMenuDrawer() { document.getElementById('menuDrawer').classList.remove('open'); }
 
   // Theme & Privacy
-  function toggleTheme() {
-    document.body.classList.toggle('light-mode');
-  }
-
+  function toggleTheme() { document.body.classList.toggle('light-mode'); }
   function togglePrivacy() {
     isPrivate = !isPrivate;
-    const base = calculateTotalBalance();
-    document.getElementById('balanceAmount').innerText = isPrivate ? '₹ ••••••••' : `₹${base.toLocaleString('en-IN')}.00`;
+    const totals = computeLedgerTotals();
+    document.getElementById('balanceAmount').innerText = isPrivate ? '₹ ••••••••' : `₹${totals.netCapital.toLocaleString('en-IN', {minimumFractionDigits: 2})}`;
+    document.getElementById('allocatedCapitalDisplay').innerText = isPrivate ? '₹ ••••••••' : `₹${totals.allocatedCapital.toLocaleString('en-IN', {minimumFractionDigits: 2})}`;
     document.getElementById('privacyIcon').innerHTML = isPrivate
       ? '<path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" x2="22" y1="2" y2="22"/>'
       : '<path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/>';
@@ -1364,8 +1116,10 @@
   function animateNumber(elementId, targetValue, isCurrency = true) {
     const el = document.getElementById(elementId);
     if (!el) return;
+    if (isPrivate) { el.innerText = '₹ ••••••••'; return; }
+    
     let start = 0;
-    const duration = 500;
+    const duration = 400;
     const startTime = performance.now();
 
     function update(now) {
@@ -1375,7 +1129,6 @@
       const current = Math.floor(targetValue * ease);
 
       el.innerText = isCurrency ? `₹${current.toLocaleString('en-IN')}.00` : current;
-
       if (progress < 1) requestAnimationFrame(update);
     }
     requestAnimationFrame(update);
@@ -1403,73 +1156,152 @@
     }
   }
 
-  // Punch Modal Controls
-  function openPunchModal() {
-    document.getElementById('punchModal').classList.add('show');
-  }
-  function closePunchModal() {
-    document.getElementById('punchModal').classList.remove('show');
-  }
+  // Modals Controls
+  function openPunchModal() { document.getElementById('punchModal').classList.add('show'); updateLiveCalc(); }
+  function closePunchModal() { document.getElementById('punchModal').classList.remove('show'); }
 
-  // Dhan Modal Controls
-  function openDhanModal() {
-    document.getElementById('dhanModal').classList.add('show');
-  }
-  function closeDhanModal() {
-    document.getElementById('dhanModal').classList.remove('show');
+  function openCapitalModal() { document.getElementById('capitalModal').classList.add('show'); }
+  function closeCapitalModal() { document.getElementById('capitalModal').classList.remove('show'); }
+
+  function setCapitalType(type, el) {
+    currentCapitalAction = type;
+    document.querySelectorAll('#capitalModal .time-chip').forEach(c => c.classList.remove('active'));
+    el.classList.add('active');
+    document.getElementById('capAmountLabel').innerText = type === 'SET_BASE' ? 'New Baseline Capital (₹)' : 'Amount (₹)';
   }
 
   // ========================================================
-  // REAL SUPABASE CLOUD DATA LAYER
+  // REAL SUPABASE CLOUD DATA & CALCULATION ENGINE
   // ========================================================
+  async function fetchAllData() {
+    await Promise.all([fetchTradesFromSupabase(), fetchCapitalFromSupabase()]);
+    renderAll();
+  }
+
   async function fetchTradesFromSupabase() {
     try {
-      const res = await fetch(`${SUPABASE_URL}/rest/v1/trade_positions?select=*&order=entry_time.desc`, {
-        headers: {
-          'apikey': SUPABASE_KEY,
-          'Authorization': `Bearer ${SUPABASE_KEY}`
-        }
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/trade_positions?select=*&order=entry_time.asc`, {
+        headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
       });
-      if (res.ok) {
-        cachedTrades = await res.json();
-        renderTrades(cachedTrades);
+      if (res.ok) cachedTrades = await res.json();
+    } catch(err) { console.warn('Supabase trades fetch error:', err); }
+  }
+
+  async function fetchCapitalFromSupabase() {
+    try {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/capital_ledger?select=*&order=date.asc`, {
+        headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
+      });
+      if (res.ok) cachedCapitalEvents = await res.json();
+    } catch(err) { console.warn('Supabase capital fetch error:', err); }
+  }
+
+  function computeLedgerTotals() {
+    let allocatedCapital = 0;
+    cachedCapitalEvents.forEach(evt => {
+      const amt = parseFloat(evt.amount) || 0;
+      if (evt.txn_type === 'DEPOSIT') allocatedCapital += amt;
+      else if (evt.txn_type === 'WITHDRAWAL') allocatedCapital -= amt;
+    });
+
+    let totalGross = 0;
+    let totalFees = 0;
+    let totalTradeNet = 0;
+    let turnover = 0;
+
+    let todayNet = 0;
+    let todayWins = 0;
+    let todayLosses = 0;
+    const todayStr = new Date().toISOString().slice(0, 10);
+
+    cachedTrades.forEach(t => {
+      const gross = parseFloat(t.gross_pnl) || 0;
+      const fees = parseFloat(t.total_charges) || 0;
+      const net = parseFloat(t.net_pnl) || 0;
+
+      totalGross += gross;
+      totalFees += fees;
+      totalTradeNet += net;
+      turnover += Math.abs(gross);
+
+      if (t.entry_time && t.entry_time.slice(0, 10) === todayStr) {
+        todayNet += net;
+        if (net >= 0) todayWins++; else todayLosses++;
       }
-    } catch(err) {
-      console.warn('Supabase fetch error, fallback to offline cache:', err);
+    });
+
+    const netCapital = allocatedCapital + totalTradeNet;
+
+    return {
+      allocatedCapital,
+      netCapital,
+      totalGross,
+      totalFees,
+      totalTradeNet,
+      turnover,
+      todayNet,
+      todayWins,
+      todayLosses,
+      todayTradesCount: todayWins + todayLosses
+    };
+  }
+
+  function renderAll() {
+    const totals = computeLedgerTotals();
+
+    // 1. Cards
+    if (!isPrivate) {
+      animateNumber('balanceAmount', totals.netCapital, true);
+      document.getElementById('allocatedCapitalDisplay').innerText = `₹${totals.allocatedCapital.toLocaleString('en-IN', {minimumFractionDigits: 2})}`;
     }
+
+    // 2. Greeting
+    const greetingSubtitle = document.getElementById('dayPnlSummary');
+    if (totals.todayTradesCount === 0) {
+      greetingSubtitle.innerText = `Today: ₹0.00 (0 Trades) • Ready for executions ⚪`;
+    } else {
+      const isProf = totals.todayNet >= 0;
+      greetingSubtitle.innerText = `Today: ${isProf ? '+' : ''}₹${totals.todayNet.toLocaleString('en-IN', {minimumFractionDigits: 2})} (${totals.todayWins} Wins • ${totals.todayLosses} Losses) ${isProf ? '🟢' : '🔴'}`;
+    }
+
+    // 3. Trade Accordion
+    renderTradeList();
+
+    // 4. Session Bars
+    renderSessionBars();
+
+    // 5. Chart
+    renderChart(totals);
+
+    // 6. Calendar Tab
+    renderCalendar(totals);
+
+    // 7. Tax Tab
+    renderTaxTab(totals);
   }
 
-  function calculateTotalBalance() {
-    const baseCapital = 240000;
-    const totalPnl = cachedTrades.reduce((acc, t) => acc + (parseFloat(t.net_pnl) || 0), 0);
-    return baseCapital + totalPnl;
-  }
-
-  function renderTrades(trades) {
+  function renderTradeList() {
     const container = document.getElementById('tradesAccordionContainer');
     if (!container) return;
 
-    if (!trades || trades.length === 0) {
+    if (cachedTrades.length === 0) {
       container.innerHTML = `
-        <div style="text-align:center; padding:30px 10px; color:var(--text-muted); font-size:13px;">
-          No trades logged yet. Tap <b>+ Add Trade</b> to punch your first execution!
+        <div style="text-align:center; padding:36px 16px; color:var(--text-muted); background:var(--card-bg); border:1px dashed var(--border); border-radius:20px;">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="opacity:0.6; margin-bottom:10px;"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+          <div style="font-weight:700; font-size:14px; color:var(--text-main); margin-bottom:4px;">No Executions Logged Yet</div>
+          <div style="font-size:12px; line-height:1.4;">Tap <b>+ Add Trade</b> to punch your first execution with exact Dhan charges.</div>
         </div>
       `;
       return;
     }
 
-    let todayNet = 0;
-    let wins = 0;
-    let losses = 0;
-
-    container.innerHTML = trades.map((t, idx) => {
+    // Render in reverse chronological order
+    const reversed = [...cachedTrades].reverse();
+    container.innerHTML = reversed.map((t, idx) => {
       const net = parseFloat(t.net_pnl) || 0;
       const gross = parseFloat(t.gross_pnl) || 0;
       const charges = parseFloat(t.total_charges) || 0;
       const isProfit = net >= 0;
-
-      todayNet += net;
-      if (net >= 0) wins++; else losses++;
 
       const tradeId = `supa-trade-${t.id || idx}`;
       const entryTimeStr = t.entry_time ? new Date(t.entry_time).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : 'Today';
@@ -1510,19 +1342,197 @@
         </div>
       `;
     }).join('');
-
-    // Update today's PnL banner
-    const summary = document.getElementById('dayPnlSummary');
-    if (summary) {
-      const isDayProfit = todayNet >= 0;
-      summary.innerText = `Today: ${isDayProfit ? '+' : ''}₹${todayNet.toLocaleString('en-IN', {minimumFractionDigits: 2})} (${wins} Wins • ${losses} Losses) ${isDayProfit ? '🟢' : '🔴'}`;
-    }
-
-    // Update total capital balance
-    const currentBal = calculateTotalBalance();
-    animateNumber('balanceAmount', currentBal, true);
   }
 
+  function renderSessionBars() {
+    const row = document.getElementById('sessionBarsRow');
+    const streakLabel = document.getElementById('sessionStreakLabel');
+    if (!row) return;
+
+    if (cachedTrades.length === 0) {
+      streakLabel.innerText = 'Awaiting Trades ⚪';
+      row.innerHTML = ['Mon', 'Tue', 'Wed', 'Thu', 'Today'].map(day => `
+        <div class="bar-day-card">
+          <span class="bar-day-name">${day}</span>
+          <div class="bar-visual bar-neutral" style="height:6px;"></div>
+          <span class="bar-day-pnl" style="color:var(--text-sub);">-</span>
+        </div>
+      `).join('');
+      return;
+    }
+
+    // Group real trades by date
+    const dayTotals = {};
+    cachedTrades.forEach(t => {
+      const d = t.entry_time ? t.entry_time.slice(0, 10) : 'Today';
+      dayTotals[d] = (dayTotals[d] || 0) + (parseFloat(t.net_pnl) || 0);
+    });
+
+    const dates = Object.keys(dayTotals).slice(-5);
+    let winDays = 0;
+    row.innerHTML = dates.map(d => {
+      const net = dayTotals[d];
+      const isWin = net >= 0;
+      if (isWin) winDays++;
+      const height = Math.min(Math.max(Math.abs(net) / 80, 8), 54);
+      return `
+        <div class="bar-day-card" onclick="alert('${d}: ${isWin ? '+' : ''}₹${net.toFixed(2)}')">
+          <span class="bar-day-name">${d.slice(5)}</span>
+          <div class="bar-visual ${isWin ? 'bar-green' : 'bar-red'}" style="height:${height}px;"></div>
+          <span class="bar-day-pnl ${isWin ? 'val-green' : 'val-red'}">${isWin ? '+' : ''}${Math.round(net/1000)}k</span>
+        </div>
+      `;
+    }).join('');
+
+    streakLabel.innerText = `${Math.round((winDays / dates.length) * 100)}% Green Days 🟢`;
+  }
+
+  function renderChart(totals) {
+    const strokePath = document.getElementById('chartStrokePath');
+    const fillPath = document.getElementById('chartFillPath');
+    const valDisplay = document.getElementById('chartValueDisplay');
+    valDisplay.innerText = `₹${totals.netCapital.toLocaleString('en-IN')}.00`;
+
+    if (cachedTrades.length === 0) {
+      strokePath.setAttribute('d', 'M0,50 L350,50');
+      strokePath.setAttribute('stroke', '#8E8E93');
+      strokePath.setAttribute('stroke-dasharray', '4');
+      fillPath.setAttribute('d', 'M0,50 L350,50 L350,100 L0,100 Z');
+      return;
+    }
+
+    // Plot dynamic cumulative curve from trades
+    let running = totals.allocatedCapital;
+    const points = [running];
+    cachedTrades.forEach(t => {
+      running += (parseFloat(t.net_pnl) || 0);
+      points.push(running);
+    });
+
+    const min = Math.min(...points);
+    const max = Math.max(...points);
+    const range = (max - min) === 0 ? 1 : (max - min);
+
+    const svgPoints = points.map((p, idx) => {
+      const x = (idx / (points.length - 1)) * 350;
+      const y = 90 - ((p - min) / range) * 80;
+      return `${x},${y}`;
+    });
+
+    const dStroke = `M` + svgPoints.join(' L');
+    const dFill = dStroke + ` L350,100 L0,100 Z`;
+
+    strokePath.setAttribute('d', dStroke);
+    strokePath.setAttribute('stroke', '#30D158');
+    strokePath.removeAttribute('stroke-dasharray');
+    fillPath.setAttribute('d', dFill);
+  }
+
+  function renderCalendar(totals) {
+    const netEl = document.getElementById('calMonthNet');
+    if (netEl) netEl.innerText = `${totals.totalTradeNet >= 0 ? '+' : ''}₹${totals.totalTradeNet.toLocaleString('en-IN', {minimumFractionDigits:2})} Realized`;
+
+    const totalSessions = document.getElementById('calTotalSessions');
+    if (totalSessions) totalSessions.innerText = cachedTrades.length;
+
+    let wins = 0;
+    let winSum = 0;
+    let lossSum = 0;
+    cachedTrades.forEach(t => {
+      const net = parseFloat(t.net_pnl) || 0;
+      if (net >= 0) { wins++; winSum += net; }
+      else { lossSum += Math.abs(net); }
+    });
+
+    const losses = cachedTrades.length - wins;
+    const winRate = cachedTrades.length > 0 ? Math.round((wins / cachedTrades.length) * 100) : 0;
+    const avgWin = wins > 0 ? (winSum / wins) : 0;
+    const avgLoss = losses > 0 ? (lossSum / losses) : 0;
+    const payoff = avgLoss > 0 ? (avgWin / avgLoss).toFixed(2) : '0.0';
+
+    if (document.getElementById('calWinRate')) document.getElementById('calWinRate').innerText = `${winRate}%`;
+    if (document.getElementById('calAvgWin')) document.getElementById('calAvgWin').innerText = `₹${avgWin.toFixed(2)}`;
+    if (document.getElementById('calAvgLoss')) document.getElementById('calAvgLoss').innerText = `₹${avgLoss.toFixed(2)}`;
+    if (document.getElementById('calPayoff')) document.getElementById('calPayoff').innerText = `1 : ${payoff}`;
+  }
+
+  function renderTaxTab(totals) {
+    const turnoverEl = document.getElementById('taxTurnoverDisplay');
+    if (turnoverEl) turnoverEl.innerText = `₹${totals.turnover.toLocaleString('en-IN', {minimumFractionDigits: 2})}`;
+
+    const grossEl = document.getElementById('taxGrossProfits');
+    if (grossEl) grossEl.innerText = `${totals.totalGross >= 0 ? '+' : ''}₹${totals.totalGross.toLocaleString('en-IN', {minimumFractionDigits: 2})}`;
+
+    const feesEl = document.getElementById('taxBrokerageTotal');
+    if (feesEl) feesEl.innerText = `-₹${totals.totalFees.toLocaleString('en-IN', {minimumFractionDigits: 2})}`;
+
+    const netTaxEl = document.getElementById('taxNetBusinessIncome');
+    if (netTaxEl) netTaxEl.innerText = `${totals.totalTradeNet >= 0 ? '+' : ''}₹${totals.totalTradeNet.toLocaleString('en-IN', {minimumFractionDigits: 2})}`;
+  }
+
+  // ========================================================
+  // CAPITAL MANAGEMENT ACTIONS
+  // ========================================================
+  async function submitCapitalChange() {
+    const amt = parseFloat(document.getElementById('capitalAmountInput').value) || 0;
+    const note = document.getElementById('capitalNoteInput').value.trim() || 'Capital adjustment';
+
+    if (amt <= 0) {
+      alert('Please enter a valid amount.');
+      return;
+    }
+
+    closeCapitalModal();
+
+    try {
+      if (currentCapitalAction === 'SET_BASE') {
+        // Wipe existing capital ledger and set starting base
+        await fetch(`${SUPABASE_URL}/rest/v1/capital_ledger?id=not.is.null`, {
+          method: 'DELETE',
+          headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
+        });
+        await fetch(`${SUPABASE_URL}/rest/v1/capital_ledger`, {
+          method: 'POST',
+          headers: {
+            'apikey': SUPABASE_KEY,
+            'Authorization': `Bearer ${SUPABASE_KEY}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            txn_type: 'DEPOSIT',
+            amount: amt,
+            date: new Date().toISOString().slice(0, 10),
+            description: note.length ? note : 'Starting Capital Baseline'
+          })
+        });
+      } else {
+        await fetch(`${SUPABASE_URL}/rest/v1/capital_ledger`, {
+          method: 'POST',
+          headers: {
+            'apikey': SUPABASE_KEY,
+            'Authorization': `Bearer ${SUPABASE_KEY}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            txn_type: currentCapitalAction,
+            amount: amt,
+            date: new Date().toISOString().slice(0, 10),
+            description: note
+          })
+        });
+      }
+
+      await fetchAllData();
+      alert(`Capital ${currentCapitalAction === 'WITHDRAWAL' ? 'withdrawal' : 'deposit'} of ₹${amt.toLocaleString('en-IN')} saved to ledger!`);
+    } catch(err) {
+      console.error(err);
+      alert('Failed to save capital transaction: ' + err.message);
+    }
+  }
+
+  // ========================================================
+  // TRADE PUNCH & DHAN CHARGE CALCULATOR
+  // ========================================================
   function setPreset(name, lotQty, el) {
     document.querySelectorAll('#punchModal .time-chip').forEach(c => c.classList.remove('active'));
     el.classList.add('active');
@@ -1538,7 +1548,7 @@
 
     const points = exit - entry;
     const gross = points * qty;
-    // Exact Dhan F&O expenses
+    // Exact Dhan F&O Expense Formula
     const brokerage = 40.0;
     const stt = exit * qty * 0.0010;
     const exchangeGst = (entry + exit) * qty * 0.0003503 * 1.18;
@@ -1578,7 +1588,6 @@
 
     const points = exit - entry;
     const gross = points * qty;
-    // Exact Dhan Brokerage & Regulatory Charges
     const brokerage = 40.0;
     const stt = exit * qty * 0.0010;
     const exchangeGst = (entry + exit) * qty * 0.0003503 * 1.18;
@@ -1599,7 +1608,7 @@
       net_pnl: net,
       setup_tags: [strategy, discipline],
       mistake_tags: discipline.includes('🔴') ? [discipline] : [],
-      notes: `Manual Punch: ${qty} Qty @ ₹${entry} -> ₹${exit} (Captured ${points.toFixed(1)} pts) • ${discipline}`
+      notes: `Punch: ${qty} Qty @ ₹${entry} -> ₹${exit} (Captured ${points.toFixed(1)} pts) • ${discipline}`
     };
 
     closePunchModal();
@@ -1617,13 +1626,9 @@
       });
 
       if (res.ok) {
-        await fetchTradesFromSupabase();
-      } else {
-        alert('Trade saved locally.');
+        await fetchAllData();
       }
-    } catch(err) {
-      console.error(err);
-    }
+    } catch(err) { console.error(err); }
   }
 
   async function deleteTrade(id) {
@@ -1631,24 +1636,81 @@
     try {
       const res = await fetch(`${SUPABASE_URL}/rest/v1/trade_positions?id=eq.${id}`, {
         method: 'DELETE',
-        headers: {
-          'apikey': SUPABASE_KEY,
-          'Authorization': `Bearer ${SUPABASE_KEY}`
-        }
+        headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
       });
-      if (res.ok) {
-        await fetchTradesFromSupabase();
-      }
-    } catch(e) {
-      console.error(e);
+      if (res.ok) await fetchAllData();
+    } catch(e) { console.error(e); }
+  }
+
+  function toggleAccordion(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const isOpen = el.classList.contains('open');
+    document.querySelectorAll('.trade-accordion-item').forEach(item => item.classList.remove('open'));
+    if (!isOpen) el.classList.add('open');
+  }
+
+  // ========================================================
+  // CSV EXPORT & DATA RESET
+  // ========================================================
+  function exportLedgerCsv() {
+    closeMenuDrawer();
+    if (cachedTrades.length === 0 && cachedCapitalEvents.length === 0) {
+      alert('Ledger is currently empty. No data to export.');
+      return;
+    }
+
+    let csvContent = 'data:text/csv;charset=utf-8,';
+    csvContent += 'Section,Date,Symbol/Type,Strategy,Qty,Gross PnL,Dhan Brokerage & Taxes,Net PnL,Notes\n';
+
+    cachedCapitalEvents.forEach(c => {
+      csvContent += `CAPITAL,${c.date},${c.txn_type},-,${c.amount},-,${c.amount},${c.description || ''}\n`;
+    });
+
+    cachedTrades.forEach(t => {
+      csvContent += `TRADE,${t.entry_time.slice(0,10)},${t.symbol},${t.strategy_name},${t.gross_pnl},${t.total_charges},${t.net_pnl},"${t.notes || ''}"\n`;
+    });
+
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement('a');
+    link.setAttribute('href', encodedUri);
+    link.setAttribute('download', `Vega_Ledger_${new Date().toISOString().slice(0,10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  }
+
+  async function wipeLedgerData() {
+    closeMenuDrawer();
+    if (!confirm('CAUTION: Are you sure you want to completely wipe all trades and capital transactions from the cloud?\nThis will return Vega to a 100% blank slate.')) return;
+
+    try {
+      await fetch(`${SUPABASE_URL}/rest/v1/trade_positions?id=not.is.null`, {
+        method: 'DELETE',
+        headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
+      });
+      await fetch(`${SUPABASE_URL}/rest/v1/capital_ledger?id=not.is.null`, {
+        method: 'DELETE',
+        headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
+      });
+      await fetchAllData();
+      alert('Vega has been reset to a 100% clean blank slate.');
+    } catch(err) {
+      alert('Error wiping ledger: ' + err.message);
     }
   }
 
-  // Load live Supabase database on startup & poll every 10s
-  fetchTradesFromSupabase();
-  setInterval(() => {
-    fetchTradesFromSupabase();
-  }, 10000);
+  // Timeframe Filter
+  function setTimeframe(tf, el) {
+    activeTf = tf;
+    document.querySelectorAll('.time-chip').forEach(c => c.classList.remove('active'));
+    el.classList.add('active');
+    renderAll();
+  }
+
+  // Initial Boot
+  fetchAllData();
+  setInterval(fetchAllData, 10000);
 </script>
 </body>
 </html>
